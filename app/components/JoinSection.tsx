@@ -61,7 +61,7 @@ export default function JoinSection() {
       </section>
 
       {/* Editorial Footer */}
-      <footer className="py-16 border-t border-primary-border text-center text-[10px] text-secondary-text/30 font-light tracking-[0.3em] relative z-10 bg-black/60">
+      <footer className="py-16 border-t border-primary-border text-center text-[10px] text-secondary-text/30 font-light tracking-[0.3em] relative z-10 bg-primary-bg/80">
         © 2026 IEEE TECHX REIGNITE. POWERED BY BUILDERS. ALL RIGHTS RESERVED.
       </footer>
     </>

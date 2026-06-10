@@ -14,7 +14,7 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "TECHX REIGNITE — Where Builders Return",
+  title: "TechX-ReiGnite",
   description: "A flagship cinematic experience for builders, developers, and creators. Discover your place in tech.",
 };
 

@@ -23,7 +23,7 @@ export default function Header({ muted, onToggleMute }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 border-b border-white/5 bg-black/60 backdrop-blur-lg">
+      <header className="fixed top-0 left-0 w-full z-50 border-b border-primary-border bg-primary-bg/70 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <a
             href="#hero"

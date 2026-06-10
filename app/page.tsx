@@ -53,37 +53,37 @@ export default function Home() {
 
   const timelineData = [
     { 
-      day: "Day 1 — July 13", 
+      day: "Day 1 - July 13", 
       title: "Cybersecurity Workshop", 
       desc: "9:00 AM – 4:00 PM. Hands-on technical session organized in collaboration with IEEE CS College of Engineering Attingal SBC." 
     },
     { 
-      day: "Day 2 — July 14", 
+      day: "Day 2 - July 14", 
       title: "8-Hour AI-thon", 
       desc: "8:00 AM – 4:00 PM. Intensive software build sprint in collaboration with IEEE CS Government Engineering College Barton Hill SBC." 
     },
     { 
-      day: "Day 3 — July 15", 
+      day: "Day 3 - July 15", 
       title: "Introduction to ADAS", 
       desc: "7:00 PM – 8:00 PM. Interactive talk session on Advanced Driver Assistance Systems with IEEE IAS SCT SBC." 
     },
     { 
-      day: "Day 4 — July 16", 
+      day: "Day 4 - July 16", 
       title: "Gene Computing", 
       desc: "7:00 PM – 8:00 PM. Computational biology and genetics talk session with IEEE EMBS SCT SBC." 
     },
     { 
-      day: "Day 5 — July 17", 
+      day: "Day 5 - July 17", 
       title: "Grand Inauguration", 
       desc: "4:30 PM – 6:00 PM. Launch ceremony and event orientation for all registered participants." 
     },
     { 
-      day: "Day 6 — July 18 (Full Day)", 
+      day: "Day 6 - July 18 (Full Day)", 
       title: "Main Workshop & Soft Skills", 
       desc: "8:30 AM Registration | 9:30 AM IoT & LLM Building Workshops | 1:30 PM Networking session | 4:00 PM Interactive soft skill development." 
     },
     { 
-      day: "Day 7 — July 19 (Full Day)", 
+      day: "Day 7 - July 19 (Full Day)", 
       title: "Competition & Mentoring", 
       desc: "9:30 AM Track Competitions | 1:30 PM Nano Mentoring with IEEE CS SYP | 3:30 PM Parallel Events (CS ExCom Meet & Membership Development) | 4:30 PM Awards." 
     }

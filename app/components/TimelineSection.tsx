@@ -12,7 +12,7 @@ interface TimelineSectionProps {
 
 export default function TimelineSection({ timelineData }: TimelineSectionProps) {
   return (
-    <section id="timeline" className="min-h-screen relative flex flex-col justify-center px-6 py-24 bg-black/20">
+    <section id="timeline" className="min-h-screen relative flex flex-col justify-center px-6 py-24 bg-primary-bg/20">
       <div className="max-w-4xl w-full mx-auto z-10">
         <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-4 font-semibold">06 / The Schedule</p>
         <h2 className="text-4xl md:text-6xl font-display text-white mb-16 leading-none">The 7-Day Sprint</h2>
