@@ -20,14 +20,16 @@ export default function TrackPanel({ index, category, subtitle, desc, imageSrc }
           <p className="text-lg text-white/60 font-light leading-relaxed mb-8">{desc}</p>
           <div className="text-xs uppercase tracking-widest text-[#00e5ff] font-bold">{subtitle}</div>
         </div>
-        <div className="relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
-          <Image
-            src={imageSrc}
-            alt={category}
-            fill
-            className="object-cover"
-            sizes="(max-w-768px) 100vw, 50vw"
-          />
+        <div className="perspective-3d">
+          <div className="tilt-wrapper relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
+            <Image
+              src={imageSrc}
+              alt={category}
+              fill
+              className="object-cover"
+              sizes="(max-w-768px) 100vw, 50vw"
+            />
+          </div>
         </div>
       </div>
     </section>

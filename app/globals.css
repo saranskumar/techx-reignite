@@ -87,7 +87,7 @@ h1, h2, h3, .font-display {
   line-height: 0.9;
 }
 
-/* Elegant Nav Link Slide-Underlines */
+/* Elegant Nav Link Double-Swipe Underlines */
 .nav-link {
   position: relative;
 }
@@ -106,8 +106,26 @@ h1, h2, h3, .font-display {
 }
 
 .nav-link:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
+  animation: nav-swipe-line 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes nav-swipe-line {
+  0% {
+    transform-origin: right;
+    transform: scaleX(1);
+  }
+  40% {
+    transform-origin: right;
+    transform: scaleX(0);
+  }
+  60% {
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  100% {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
 }
 
 /* PHA5E-style Transparent Stroked Typography */
@@ -250,4 +268,92 @@ h1, h2, h3, .font-display {
 .faq-chevron.open {
   transform: rotate(180deg);
   color: var(--accent-color);
+}
+
+/* 3D Perspective Hover Image Tilting */
+.perspective-3d {
+  perspective: 1000px;
+}
+
+.tilt-wrapper {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  width: 100%;
+  height: 100%;
+}
+
+.perspective-3d:hover .tilt-wrapper {
+  transform: rotateY(-8deg) rotateX(4deg) scale(0.98);
+}
+
+.perspective-3d img {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.perspective-3d:hover img {
+  transform: scale(1.08);
+}
+
+/* Premium Typography slight horizontal compression */
+.compressed-header {
+  transform: scaleX(0.98);
+  transform-origin: left;
+  display: inline-block;
+}
+
+/* Mobile Overlay Circular Menu */
+.cover-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 45;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cover-menu.active {
+  pointer-events: all;
+}
+
+.cover-background {
+  position: absolute;
+  top: -50vh;
+  right: -50vw;
+  width: 200vw;
+  height: 200vh;
+  border-radius: 50%;
+  background-color: #080808;
+  transform: scale(0);
+  transform-origin: 90% 10%;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.cover-menu.active .cover-background {
+  transform: scale(1);
+}
+
+.cover-content {
+  position: relative;
+  z-index: 46;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 40px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  transition-delay: 0.2s;
+}
+
+.cover-menu.active .cover-content {
+  opacity: 1;
+}
+
+/* Hamburger menu lines */
+.hamburger-line {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }

@@ -15,6 +15,7 @@ import TimelineSection from "./components/TimelineSection";
 import StatsSection from "./components/StatsSection";
 import FAQSection from "./components/FAQSection";
 import JoinSection from "./components/JoinSection";
+import ScrollIndicator from "./components/ScrollIndicator";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -218,6 +219,9 @@ export default function Home() {
       
       {/* Studio PHA5E Custom Dual Cursor follower */}
       <CustomCursor />
+
+      {/* Right-Side Scroll Depth Progress Indicator */}
+      <ScrollIndicator />
 
       {/* Header Sticky Navigation */}
       <Header muted={muted} onToggleMute={handleToggleMute} />

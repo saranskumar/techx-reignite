@@ -29,14 +29,16 @@ export default function AboutPanel() {
             </p>
           </div>
         </div>
-        <div className="relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
-          <Image
-            src="/community.png"
-            alt="Engineering Gathering"
-            fill
-            className="object-cover"
-            sizes="(max-w-768px) 100vw, 50vw"
-          />
+        <div className="perspective-3d">
+          <div className="tilt-wrapper relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
+            <Image
+              src="/community.png"
+              alt="Engineering Gathering"
+              fill
+              className="object-cover"
+              sizes="(max-w-768px) 100vw, 50vw"
+            />
+          </div>
         </div>
       </div>
     </section>
