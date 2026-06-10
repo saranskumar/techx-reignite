@@ -1,10 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap");
-
 @import "tailwindcss";
 
 :root {
-  --font-sans: "Inter", sans-serif;
-  --font-display: "Syne", sans-serif;
   --bg-color: #050505;
   --text-color: #e5e5e5;
   --text-muted: #8c8c8c;

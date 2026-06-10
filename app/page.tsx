@@ -14,10 +14,6 @@ if (typeof window !== "undefined") {
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pulseRef = useRef<HTMLDivElement>(null);
-  const textRef1 = useRef<HTMLDivElement>(null);
-  const textRef2 = useRef<HTMLDivElement>(null);
-  const textRef3 = useRef<HTMLDivElement>(null);
-  const gatheringRef = useRef<HTMLDivElement>(null);
   const logoLettersRef = useRef<HTMLDivElement>(null);
 
   const [muted, setMuted] = useState(true);
@@ -54,9 +50,10 @@ export default function Home() {
     // Pin pulse elements and animate properties based on scroll position
     const acts = gsap.utils.toArray(".act-section");
     
-    acts.forEach((act: any, index: number) => {
+    acts.forEach((act: unknown, index: number) => {
+      const actElement = act as HTMLElement;
       ScrollTrigger.create({
-        trigger: act,
+        trigger: actElement,
         start: "top center",
         end: "bottom center",
         onEnter: () => {
@@ -116,7 +113,7 @@ export default function Home() {
 
     // Act 6 Convergence Timeline
     const letters = document.querySelectorAll(".converge-letter");
-    letters.forEach((letter: any) => {
+    letters.forEach((letter: Element) => {
       // Set random starting positions for the fragments
       const randomX = (Math.random() - 0.5) * window.innerWidth * 0.9;
       const randomY = (Math.random() - 0.5) * window.innerHeight * 0.9;

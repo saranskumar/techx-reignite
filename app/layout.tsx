@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
+import { Inter, Syne } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   title: "TECHX REIGNITE — Where Builders Return",
@@ -14,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased bg-[#050505] text-[#e5e5e5]">
+      <body className={`${inter.variable} ${syne.variable} antialiased bg-[#050505] text-[#e5e5e5]`}>
         <div className="noise-overlay" />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

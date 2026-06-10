@@ -16,7 +16,7 @@ class AudioEngine {
   init() {
     if (this.isInitialized || typeof window === "undefined") return;
     try {
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
       if (!AudioContextClass) return;
 
       this.ctx = new AudioContextClass();
@@ -118,7 +118,7 @@ class AudioEngine {
 
       osc.start();
       osc.stop(this.ctx.currentTime + duration);
-    } catch (e) {
+    } catch {
       // Audio node errors ignored safely
     }
   }
@@ -143,7 +143,7 @@ class AudioEngine {
 
       osc.start();
       osc.stop(this.ctx.currentTime + 0.08);
-    } catch (e) {
+    } catch {
       // Audio node errors ignored safely
     }
   }
@@ -188,7 +188,7 @@ class AudioEngine {
         osc.start();
         osc.stop(now + duration);
       });
-    } catch (e) {
+    } catch {
       // Audio node errors ignored safely
     }
   }
@@ -206,7 +206,7 @@ class AudioEngine {
       this.ambientOsc1.frequency.setTargetAtTime(baseFreq, now, 0.4);
       this.ambientOsc2.frequency.setTargetAtTime(baseFreq * 2, now, 0.4);
       this.filter.frequency.setTargetAtTime(cutOff, now, 0.4);
-    } catch (e) {
+    } catch {
       // Ignore audio synthesis errors on scroll
     }
   }
