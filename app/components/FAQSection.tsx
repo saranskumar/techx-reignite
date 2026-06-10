@@ -33,7 +33,7 @@ export default function FAQSection({ faqData }: FAQSectionProps) {
             >
               <button
                 onClick={() => toggleFaq(idx)}
-                className="w-full flex items-center justify-between text-left py-2 text-white hover:text-[#00e5ff] transition-all cursor-pointer"
+                className="w-full flex items-center justify-between text-left py-2 text-white hover:text-accent transition-all cursor-pointer"
               >
                 <span className="text-lg md:text-xl font-medium tracking-wide">{item.question}</span>
                 <ChevronDown className={`w-5 h-5 faq-chevron ${openFaq === idx ? "open" : ""}`} />

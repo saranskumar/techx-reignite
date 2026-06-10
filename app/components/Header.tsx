@@ -28,7 +28,7 @@ export default function Header({ muted, onToggleMute }: HeaderProps) {
           <a
             href="#hero"
             onClick={closeMenu}
-            className="font-display font-extrabold text-lg tracking-[0.2em] text-white hover:text-[#00e5ff] transition-all z-50"
+            className="font-display font-extrabold text-lg tracking-[0.2em] text-white hover:text-accent transition-all z-50"
           >
             TECHX
           </a>
@@ -54,13 +54,13 @@ export default function Header({ muted, onToggleMute }: HeaderProps) {
               title="Toggle audio drone"
               data-no-chime
             >
-              {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 animate-pulse text-[#00e5ff]" />}
+              {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 animate-pulse text-accent" />}
             </button>
             
             {/* Desktop Register Button */}
             <a
               href="#join"
-              className="hidden md:inline-block px-6 py-2.5 text-[10px] uppercase tracking-[0.2em] font-semibold border border-white/15 bg-white/5 rounded-full hover:border-[#00e5ff] hover:bg-white/10 transition-all"
+              className="hidden md:inline-block px-6 py-2.5 text-[10px] uppercase tracking-[0.2em] font-semibold border border-white/15 bg-white/5 rounded-full hover:border-accent hover:bg-white/10 transition-all"
             >
               Register
             </a>
@@ -84,13 +84,13 @@ export default function Header({ muted, onToggleMute }: HeaderProps) {
         <div className="cover-background" />
         <div className="cover-content">
           <div className="flex flex-col gap-8 items-start justify-center h-full">
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#00e5ff] font-bold">Menu Navigation</span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent font-bold">Menu Navigation</span>
             {navLinks.map((link, idx) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={closeMenu}
-                className="text-4xl font-display text-white hover:text-[#00e5ff] transition-all"
+                className="text-4xl font-display text-white hover:text-accent transition-all"
                 style={{ 
                   animationDelay: `${idx * 0.1}s`,
                 }}
@@ -102,7 +102,7 @@ export default function Header({ muted, onToggleMute }: HeaderProps) {
             <a
               href="#join"
               onClick={closeMenu}
-              className="mt-8 px-10 py-4 text-xs uppercase tracking-[0.2em] font-semibold bg-[#00e5ff] text-black rounded-full"
+              className="mt-8 px-10 py-4 text-xs uppercase tracking-[0.2em] font-semibold bg-accent text-black rounded-full"
             >
               Register Now
             </a>

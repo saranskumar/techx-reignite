@@ -3,11 +3,23 @@
 @import "tailwindcss";
 
 :root {
-  --bg-color: #050505;
-  --text-color: #e5e5e5;
-  --text-muted: #8c8c8c;
-  --accent-color: #00e5ff; /* Pulse electric cyan */
-  --accent-glow: rgba(0, 229, 255, 0.15);
+  --bg-color: #0B0B0B;
+  --bg-card: #151515;
+  --border-color: #222222;
+  --text-color: #F6F6F6;
+  --text-muted: #EAEAEA;
+  --accent-color: #BFC7CF; /* Ice Mist */
+  --accent-glow: rgba(191, 199, 207, 0.15);
+}
+
+@theme {
+  --color-primary-bg: var(--bg-color);
+  --color-primary-card: var(--bg-card);
+  --color-primary-border: var(--border-color);
+  --color-primary-text: var(--text-color);
+  --color-secondary-text: var(--text-muted);
+  --color-accent: var(--accent-color);
+  --color-accent-glow: var(--accent-glow);
 }
 
 * {
@@ -40,7 +52,7 @@ html, body {
     left: 0;
     width: 32px;
     height: 32px;
-    border: 1.5px solid rgba(0, 229, 255, 0.45);
+    border: 1.5px solid var(--accent-glow);
     border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
@@ -56,9 +68,9 @@ html, body {
   .custom-cursor-ring.hovered {
     width: 64px;
     height: 64px;
-    background-color: rgba(0, 229, 255, 0.12);
-    border-color: #00e5ff;
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
+    background-color: var(--accent-glow);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-glow);
   }
 
   .custom-cursor-dot {
@@ -68,7 +80,7 @@ html, body {
     left: 0;
     width: 4px;
     height: 4px;
-    background-color: #00e5ff;
+    background-color: var(--accent-color);
     border-radius: 50%;
     pointer-events: none;
     z-index: 10001;
@@ -140,7 +152,6 @@ h1, h2, h3, .font-display {
 .text-outline:hover {
   color: var(--accent-color);
   -webkit-text-stroke: 1px transparent;
-  text-shadow: 0 0 25px rgba(0, 229, 255, 0.45);
 }
 
 /* Self-Drawing SVG Typography Stroke */
@@ -159,7 +170,6 @@ h1, h2, h3, .font-display {
 .outlined-svg-text:hover text {
   fill: var(--accent-color);
   stroke: transparent;
-  filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.5));
 }
 
 @keyframes drawOutline {

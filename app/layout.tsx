@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${syne.variable} antialiased bg-[#050505] text-[#e5e5e5]`}>
+      <body className={`${inter.variable} ${syne.variable} antialiased bg-primary-bg text-primary-text`}>
         <div className="noise-overlay" />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

@@ -29,7 +29,7 @@ export default function TimelineSection({ timelineData }: TimelineSectionProps) 
             >
               <div className="timeline-dot" />
               <div className={`w-full md:w-[45%] ${index % 2 === 0 ? "md:text-left" : "md:text-right"}`}>
-                <span className="text-xs font-mono font-bold text-[#00e5ff] uppercase tracking-widest">{item.day}</span>
+                <span className="text-xs font-mono font-bold text-accent uppercase tracking-widest">{item.day}</span>
                 <h3 className="text-2xl font-display text-white mt-2 mb-3 leading-none">{item.title}</h3>
                 <p className="text-sm text-white/50 font-light leading-relaxed">{item.desc}</p>
               </div>

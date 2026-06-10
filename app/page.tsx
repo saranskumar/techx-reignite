@@ -179,7 +179,7 @@ export default function Home() {
     tl.to(pulseRef.current, {
       scale: 1.8,
       opacity: 0.6,
-      backgroundColor: "rgba(0, 229, 255, 0.2)",
+      backgroundColor: "rgba(191, 199, 207, 0.2)",
       filter: "blur(35px)",
       duration: 1,
     })
@@ -187,7 +187,7 @@ export default function Home() {
       x: "25vw",
       y: "-15vh",
       scale: 1.3,
-      backgroundColor: "rgba(0, 150, 255, 0.12)",
+      backgroundColor: "rgba(191, 199, 207, 0.12)",
       filter: "blur(50px)",
       duration: 1.5,
     })
@@ -195,7 +195,7 @@ export default function Home() {
       x: "-25vw",
       y: "10vh",
       scale: 2.0,
-      backgroundColor: "rgba(0, 229, 255, 0.25)",
+      backgroundColor: "rgba(191, 199, 207, 0.25)",
       filter: "blur(40px)",
       duration: 1.5,
     })
@@ -204,7 +204,7 @@ export default function Home() {
       y: "0vh",
       scale: 1.0,
       opacity: 0.3,
-      backgroundColor: "rgba(0, 229, 255, 0.08)",
+      backgroundColor: "rgba(191, 199, 207, 0.08)",
       filter: "blur(30px)",
       duration: 1,
     });
@@ -215,7 +215,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main ref={containerRef} className="relative z-10 bg-[#050505] text-[#e5e5e5]">
+    <main ref={containerRef} className="relative z-10 bg-primary-bg text-primary-text">
       
       {/* Studio PHA5E Custom Dual Cursor follower */}
       <CustomCursor />
@@ -250,7 +250,7 @@ export default function Home() {
         {/* Horizontal Scroll Progress bar */}
         <div className="absolute bottom-16 left-12 right-12 h-[1px] bg-white/10 z-20 hidden md:block">
           <div 
-            className="h-full bg-[#00e5ff] transition-all duration-300 ease-out shadow-[0_0_8px_#00e5ff]" 
+            className="h-full bg-accent transition-all duration-300 ease-out shadow-[0_0_8px_var(--accent-color)]" 
             style={{ width: `${panelsProgress * 100}%` }} 
           />
           <div className="flex justify-between mt-3 text-[9px] uppercase tracking-[0.2em] text-white/30 font-mono">

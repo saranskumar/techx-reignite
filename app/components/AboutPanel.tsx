@@ -7,7 +7,7 @@ export default function AboutPanel() {
     <section id="about" className="horizontal-panel w-screen h-full flex items-center justify-center px-12 md:px-24">
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div className="flex flex-col max-h-[450px]">
-          <p className="text-xs uppercase tracking-[0.4em] text-[#00e5ff] mb-4 font-mono font-bold">01 / The Vision</p>
+          <p className="text-xs uppercase tracking-[0.4em] text-accent mb-4 font-mono font-bold">01 / The Vision</p>
           <h2 className="text-3xl md:text-5xl mb-6 font-display text-white leading-none">
             About TechX <br /> Reignite
           </h2>
@@ -24,7 +24,7 @@ export default function AboutPanel() {
             <p>
               With 6+ collaborations planned—including <strong>IEEE CS SYP, IEEE CS Kerala Chapter, IEEE ComSoc Kerala Chapter, IEEE CS GEC Barton Hill SBC, IEEE CS CE Attingal SBC, IEEE IAS SCT SBC, and IEEE EMBS SCT SBC</strong>—this initiative creates a massive platform for community engagement and exposure across the entire IEEE Kerala Section and India Council.
             </p>
-            <p className="text-[#00e5ff] font-medium font-display uppercase tracking-wider text-xs pt-2">
+            <p className="text-accent font-medium font-display uppercase tracking-wider text-xs pt-2">
               Join 140 participants in an inclusive ecosystem designed to spark collaboration, build technical culture, and nurture industry-ready talent.
             </p>
           </div>

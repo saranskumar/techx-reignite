@@ -25,7 +25,7 @@ export default function ScrollIndicator() {
       {/* Fixed Vertical Scroll Progress Bar (Right Edge) */}
       <div className="fixed top-0 right-0 w-[3px] h-screen bg-white/5 z-40 pointer-events-none">
         <div 
-          className="w-full bg-[#00e5ff] origin-top transition-transform duration-75 shadow-[0_0_8px_#00e5ff]"
+          className="w-full bg-accent origin-top transition-transform duration-75 shadow-[0_0_8px_var(--accent-color)]"
           style={{ 
             height: "100%", 
             transform: `scaleY(${progress})` 

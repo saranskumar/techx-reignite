@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <section id="hero" className="min-h-screen relative flex items-center justify-center px-6 pt-20 text-center">
       <div className="max-w-5xl z-10 w-full">
-        <p className="text-xs uppercase tracking-[0.3em] text-[#00e5ff] mb-6 filter drop-shadow-[0_0_8px_rgba(0,229,255,0.4)] font-semibold">
+        <p className="text-xs uppercase tracking-[0.3em] text-accent mb-6 filter drop-shadow-[0_0_8px_rgba(191,199,207,0.4)] font-semibold">
           July 13 - 19, 2026 | SCT College of Engineering
         </p>
         
@@ -35,7 +35,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="#join"
-            className="w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold bg-[#00e5ff] text-black rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all cursor-pointer"
+            className="w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold bg-accent text-black rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(191,199,207,0.4)] transition-all cursor-pointer"
           >
             Join the Sprint
           </a>
