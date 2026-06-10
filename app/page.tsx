@@ -51,11 +51,41 @@ export default function Home() {
   ];
 
   const timelineData = [
-    { day: "Day 1", title: "Arrival & Team Formation", desc: "Check-in, meet fellow builders, and formulate team squads." },
-    { day: "Day 2-4", title: "Sprint & Construction", desc: "Build systems in DevOps, optimize algorithms, and construct racing chassis." },
-    { day: "Day 5", title: "Mentorship Review", desc: "Pitch prototypes to industry leaders and refine system parameters." },
-    { day: "Day 6", title: "Speed Trials", desc: "The official Robo Race heats begin on the main track." },
-    { day: "Day 7", title: "Climax & Awards", desc: "Grand final presentations, system evaluations, and prize distributions." }
+    { 
+      day: "Day 1 — July 13", 
+      title: "Cybersecurity Workshop", 
+      desc: "9:00 AM – 4:00 PM. Hands-on technical session organized in collaboration with IEEE CS College of Engineering Attingal SBC." 
+    },
+    { 
+      day: "Day 2 — July 14", 
+      title: "8-Hour AI-thon", 
+      desc: "8:00 AM – 4:00 PM. Intensive software build sprint in collaboration with IEEE CS Government Engineering College Barton Hill SBC." 
+    },
+    { 
+      day: "Day 3 — July 15", 
+      title: "Introduction to ADAS", 
+      desc: "7:00 PM – 8:00 PM. Interactive talk session on Advanced Driver Assistance Systems with IEEE IAS SCT SBC." 
+    },
+    { 
+      day: "Day 4 — July 16", 
+      title: "Gene Computing", 
+      desc: "7:00 PM – 8:00 PM. Computational biology and genetics talk session with IEEE EMBS SCT SBC." 
+    },
+    { 
+      day: "Day 5 — July 17", 
+      title: "Grand Inauguration", 
+      desc: "4:30 PM – 6:00 PM. Launch ceremony and event orientation for all registered participants." 
+    },
+    { 
+      day: "Day 6 — July 18 (Full Day)", 
+      title: "Main Workshop & Soft Skills", 
+      desc: "8:30 AM Registration | 9:30 AM IoT & LLM Building Workshops | 1:30 PM Networking session | 4:00 PM Interactive soft skill development." 
+    },
+    { 
+      day: "Day 7 — July 19 (Full Day)", 
+      title: "Competition & Mentoring", 
+      desc: "9:30 AM Track Competitions | 1:30 PM Nano Mentoring with IEEE CS SYP | 3:30 PM Parallel Events (CS ExCom Meet & Membership Development) | 4:30 PM Awards." 
+    }
   ];
 
   // Toggle Mute & Sound
@@ -221,10 +251,10 @@ export default function Home() {
           />
           <div className="flex justify-between mt-3 text-[9px] uppercase tracking-[0.2em] text-white/30 font-mono">
             <span>01 / About</span>
-            <span>02 / DevOps</span>
-            <span>03 / Robo Race</span>
-            <span>04 / Mentorship</span>
-            <span>05 / Ecosystem</span>
+            <span>02 / IoT Building</span>
+            <span>03 / LLM Building</span>
+            <span>04 / ADAS & Gene</span>
+            <span>05 / Placement</span>
           </div>
         </div>
 
@@ -232,30 +262,30 @@ export default function Home() {
           <AboutPanel />
           <TrackPanel 
             index="02 / TRACK ONE"
-            category="DevOps"
-            subtitle="SYSTEM CONTROL & SCALING"
-            desc="Configure robust deployment systems, orchestrate containers, and master performance telemetry logs."
+            category="IoT Building"
+            subtitle="HANDS-ON OFFLINE WORKSHOP"
+            desc="Master firmware deployment, sensor configurations, and embedded systems to construct physical prototypes."
             imageSrc="/devops.png"
           />
           <TrackPanel 
             index="03 / TRACK TWO"
-            category="Robo Race"
-            subtitle="HARDWARE SPEED SPRINTS"
-            desc="Construct chassis circuits, adjust PID parameters, and race autonomous machines on the main speedway."
+            category="LLM Building"
+            subtitle="HANDS-ON OFFLINE WORKSHOP"
+            desc="Build custom large language models, execute model fine-tuning, and design specialized agentic systems."
             imageSrc="/roborace.png"
           />
           <TrackPanel 
             index="04 / TRACK THREE"
-            category="Mentorship"
-            subtitle="EXPERT CODE ARCHITECTURE"
-            desc="Refine prototypes directly under technology architects and engineering experts from leading enterprises."
+            category="ADAS & Genetech"
+            subtitle="INTERDISCIPLINARY TALK SESSIONS"
+            desc="Dive into Advanced Driver Assistance Systems (ADAS) and explore how computational biology scales through Gene Computing."
             imageSrc="/community.png"
           />
           <TrackPanel 
             index="05 / TRACK FOUR"
-            category="Ecosystem"
-            subtitle="UNIFIED IMPULSE CO-CREATION"
-            desc="Lock in with 140 developers under a shared, unified impulse to build the next layer of technology."
+            category="Placement & Mentor"
+            subtitle="CAREER LAUNCHPAD & PERSONALIZED GUIDANCE"
+            desc="Engage in interactive self-leadership, resume building, and get personalized mentoring directly from industry professionals."
             imageSrc="/community.png"
           />
         </div>

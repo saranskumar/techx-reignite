@@ -4,8 +4,8 @@ export default function Hero() {
   return (
     <section id="hero" className="min-h-screen relative flex items-center justify-center px-6 pt-20 text-center">
       <div className="max-w-5xl z-10 w-full">
-        <p className="text-xs uppercase tracking-[0.5em] text-[#00e5ff] mb-6 filter drop-shadow-[0_0_8px_rgba(0,229,255,0.4)] font-semibold">
-          IEEE FLAGSHIP EVENT 2026
+        <p className="text-xs uppercase tracking-[0.3em] text-[#00e5ff] mb-6 filter drop-shadow-[0_0_8px_rgba(0,229,255,0.4)] font-semibold">
+          July 13 - 19, 2026 | SCT College of Engineering
         </p>
         
         {/* Monumental Typography with SVG self-drawing stroke animation */}
@@ -28,8 +28,8 @@ export default function Hero() {
           </svg>
         </div>
         
-        <p className="text-sm md:text-lg tracking-[0.25em] text-white/70 uppercase max-w-xl mx-auto mb-12 leading-relaxed font-light">
-          Where builders return. A 7-Day sprint to awaken engineering momentum.
+        <p className="text-sm md:text-lg tracking-[0.25em] text-white/70 uppercase max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+          Powering Minds, One spark at a time
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
