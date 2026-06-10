@@ -26,6 +26,58 @@ html, body {
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
+/* Studio PHA5E Custom Dual Cursor followers */
+.custom-cursor-ring,
+.custom-cursor-dot {
+  display: none;
+}
+
+@media (pointer: fine) {
+  .custom-cursor-ring {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid rgba(0, 229, 255, 0.45);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    mix-blend-mode: difference;
+  }
+  
+  .custom-cursor-ring.hovered {
+    width: 64px;
+    height: 64px;
+    background-color: rgba(0, 229, 255, 0.12);
+    border-color: #00e5ff;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
+  }
+
+  .custom-cursor-dot {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    background-color: #00e5ff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10001;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    mix-blend-mode: difference;
+  }
+}
+
 /* Monumental Editorial Headers */
 h1, h2, h3, .font-display {
   font-family: var(--font-display);
@@ -33,6 +85,69 @@ h1, h2, h3, .font-display {
   text-transform: uppercase;
   letter-spacing: -0.04em;
   line-height: 0.9;
+}
+
+/* Elegant Nav Link Slide-Underlines */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* PHA5E-style Transparent Stroked Typography */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              -webkit-text-stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              text-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.text-outline:hover {
+  color: var(--accent-color);
+  -webkit-text-stroke: 1px transparent;
+  text-shadow: 0 0 25px rgba(0, 229, 255, 0.45);
+}
+
+/* Self-Drawing SVG Typography Stroke */
+.outlined-svg-text text {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1.5;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: drawOutline 3.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: fill 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.outlined-svg-text:hover text {
+  fill: var(--accent-color);
+  stroke: transparent;
+  filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.5));
+}
+
+@keyframes drawOutline {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* Film Grain Overlay */

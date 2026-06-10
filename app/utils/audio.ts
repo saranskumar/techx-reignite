@@ -22,7 +22,19 @@ class AudioEngine {
       this.ctx = new AudioContextClass();
       this.masterGain = this.ctx.createGain();
       this.masterGain.gain.setValueAtTime(0, this.ctx.currentTime);
-      this.masterGain.connect(this.ctx.destination);
+
+      // Create spatial echo feedback delay
+      const delayNode = this.ctx.createDelay(1.0);
+      delayNode.delayTime.setValueAtTime(0.35, this.ctx.currentTime); // 350ms delay timing
+      const feedbackNode = this.ctx.createGain();
+      feedbackNode.gain.setValueAtTime(0.25, this.ctx.currentTime); // 25% feedback decay
+
+      // Route audio nodes
+      this.masterGain.connect(this.ctx.destination); // Direct dry signal
+      this.masterGain.connect(delayNode);           // Route to delay line
+      delayNode.connect(feedbackNode);
+      feedbackNode.connect(delayNode);              // Feedback loop
+      feedbackNode.connect(this.ctx.destination);    // Output wet signal
 
       this.setupAmbience();
       this.isInitialized = true;

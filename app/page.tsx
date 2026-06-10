@@ -19,11 +19,17 @@ interface FAQItem {
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pulseRef = useRef<HTMLDivElement>(null);
+  const cursorRingRef = useRef<HTMLDivElement>(null);
+  const cursorDotRef = useRef<HTMLDivElement>(null);
+  const horizontalRef = useRef<HTMLDivElement>(null);
+  const panelsRef = useRef<HTMLDivElement>(null);
 
   const [muted, setMuted] = useState(true);
   const [activeSection, setActiveSection] = useState("hero");
   const [pulseCount, setPulseCount] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [cursorHovered, setCursorHovered] = useState(false);
+  const [panelsProgress, setPanelsProgress] = useState(0);
 
   const faqData: FAQItem[] = [
     {
@@ -59,6 +65,43 @@ export default function Home() {
     audioEngine.playClick();
   };
 
+  const triggerHoverEnter = () => {
+    setCursorHovered(true);
+    audioEngine.playClick();
+  };
+
+  const triggerHoverLeave = () => {
+    setCursorHovered(false);
+  };
+
+  // Custom Cursor mouse move listener (Dual Dot & Ring)
+  useEffect(() => {
+    const ring = cursorRingRef.current;
+    const dot = cursorDotRef.current;
+    if (!ring || !dot) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      // Ring trails with a smooth delay
+      gsap.to(ring, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.22,
+        ease: "power2.out",
+      });
+      // Dot follows instantly
+      gsap.to(dot, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   // Heartbeat sound interval linked to section progression
   useEffect(() => {
     if (muted) return;
@@ -66,14 +109,14 @@ export default function Home() {
     let speed = 2500;
     let frequency = 50;
 
-    if (activeSection === "tracks") {
-      speed = 1800;
-      frequency = 60;
+    if (activeSection === "horizontal-sprint") {
+      speed = 1700;
+      frequency = 62;
     } else if (activeSection === "timeline") {
-      speed = 1400;
-      frequency = 65;
+      speed = 1300;
+      frequency = 68;
     } else if (activeSection === "stats" || activeSection === "faq") {
-      speed = 1000;
+      speed = 900;
       frequency = 75;
     }
 
@@ -85,12 +128,12 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [muted, activeSection]);
 
-  // Main scroll animation driver
+  // Main scroll animation driver (Vertical sections + Horizontal Panel pinning)
   useEffect(() => {
-    if (!containerRef.current || !pulseRef.current) return;
+    if (!containerRef.current || !pulseRef.current || !horizontalRef.current || !panelsRef.current) return;
 
     // Pin pulse elements and animate properties based on scroll position
-    const sections = ["hero", "about", "tracks", "timeline", "stats", "faq", "join"];
+    const sections = ["hero", "horizontal-sprint", "timeline", "stats", "faq", "join"];
     
     sections.forEach((sec) => {
       ScrollTrigger.create({
@@ -111,6 +154,24 @@ export default function Home() {
           audioEngine.updateAmbienceFrequency(idx);
         },
       });
+    });
+
+    // Horizontal sliding panel animation using GSAP pinning
+    const panels = gsap.utils.toArray(".horizontal-panel");
+    gsap.to(panels, {
+      xPercent: -100 * (panels.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: horizontalRef.current,
+        pin: true,
+        scrub: 1,
+        start: "top top",
+        end: () => `+=${panelsRef.current?.clientWidth || 2000}`,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          setPanelsProgress(self.progress);
+        },
+      },
     });
 
     // Animate The Pulse size and intensity along scroll
@@ -168,20 +229,63 @@ export default function Home() {
   };
 
   return (
-    <main ref={containerRef} className="relative z-10 select-none bg-[#050505] text-[#e5e5e5]">
+    <main ref={containerRef} className="relative z-10 bg-[#050505] text-[#e5e5e5]">
       
+      {/* Studio PHA5E Custom Dual Cursor follower (Ring + Dot) */}
+      <div
+        ref={cursorRingRef}
+        className={`custom-cursor-ring ${cursorHovered ? "hovered" : ""}`}
+      />
+      <div
+        ref={cursorDotRef}
+        className="custom-cursor-dot"
+      />
+
       {/* Header Sticky Navigation */}
       <header className="fixed top-0 left-0 w-full z-50 border-b border-white/5 bg-black/60 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <a href="#hero" className="font-display font-extrabold text-lg tracking-[0.2em] text-white hover:text-[#00e5ff] transition-all" onMouseEnter={() => audioEngine.playClick()}>
+          <a
+            href="#hero"
+            className="font-display font-extrabold text-lg tracking-[0.2em] text-white hover:text-[#00e5ff] transition-all"
+            onMouseEnter={triggerHoverEnter}
+            onMouseLeave={triggerHoverLeave}
+          >
             TECHX
           </a>
           
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#about" className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all" onMouseEnter={() => audioEngine.playClick()}>About</a>
-            <a href="#tracks" className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all" onMouseEnter={() => audioEngine.playClick()}>Tracks</a>
-            <a href="#timeline" className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all" onMouseEnter={() => audioEngine.playClick()}>Timeline</a>
-            <a href="#faq" className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all" onMouseEnter={() => audioEngine.playClick()}>FAQ</a>
+            <a
+              href="#about"
+              className="nav-link text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all py-1"
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
+            >
+              About
+            </a>
+            <a
+              href="#tracks"
+              className="nav-link text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all py-1"
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
+            >
+              Tracks
+            </a>
+            <a
+              href="#timeline"
+              className="nav-link text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all py-1"
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
+            >
+              Timeline
+            </a>
+            <a
+              href="#faq"
+              className="nav-link text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all py-1"
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
+            >
+              FAQ
+            </a>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -189,7 +293,8 @@ export default function Home() {
             <button
               onClick={handleToggleMute}
               className="flex items-center justify-center p-2 rounded-full border border-white/10 text-white/70 hover:text-white transition-all cursor-pointer"
-              onMouseEnter={() => audioEngine.playClick()}
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
               title="Toggle audio drone"
             >
               {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 animate-pulse text-[#00e5ff]" />}
@@ -198,7 +303,8 @@ export default function Home() {
             <a
               href="#join"
               className="px-6 py-2.5 text-[10px] uppercase tracking-[0.2em] font-semibold border border-white/15 bg-white/5 rounded-full hover:border-[#00e5ff] hover:bg-white/10 transition-all"
-              onMouseEnter={() => audioEngine.playClick()}
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
             >
               Register
             </a>
@@ -223,16 +329,33 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section id="hero" className="min-h-screen relative flex items-center justify-center px-6 pt-20 text-center">
-        <div className="max-w-4xl z-10">
-          <p className="text-xs uppercase tracking-[0.5em] text-[#00e5ff] mb-6 filter drop-shadow-[0_0_8px_rgba(0,229,255,0.4)]">
+        <div className="max-w-5xl z-10 w-full">
+          <p className="text-xs uppercase tracking-[0.5em] text-[#00e5ff] mb-8 filter drop-shadow-[0_0_8px_rgba(0,229,255,0.4)]">
             IEEE FLAGSHIP EVENT 2026
           </p>
-          <h1 className="text-6xl md:text-9xl tracking-tighter mb-4 font-display text-white leading-none">
-            TECHX
-          </h1>
-          <h1 className="text-6xl md:text-9xl tracking-tighter mb-8 font-display text-[#00e5ff] leading-none filter drop-shadow-[0_0_25px_rgba(0,229,255,0.3)]">
-            REIGNITE
-          </h1>
+          
+          {/* Monumental Typography with SVG self-drawing stroke animation */}
+          <div className="w-full flex flex-col items-center justify-center mb-12">
+            <h1 className="text-7xl sm:text-8xl md:text-9xl mb-2 font-display text-white leading-none tracking-tighter">
+              TECHX
+            </h1>
+            <svg 
+              className="outlined-svg-text w-full max-w-lg md:max-w-2xl h-24 md:h-36 overflow-visible select-none" 
+              viewBox="0 0 600 100"
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
+            >
+              <text 
+                x="50%" 
+                y="70%" 
+                textAnchor="middle" 
+                className="font-display font-extrabold text-6xl md:text-8xl tracking-tight"
+              >
+                REIGNITE
+              </text>
+            </svg>
+          </div>
+          
           <p className="text-sm md:text-lg tracking-[0.25em] text-white/70 uppercase max-w-xl mx-auto mb-12 leading-relaxed">
             Where builders return. A 7-Day sprint to awaken engineering momentum.
           </p>
@@ -240,14 +363,16 @@ export default function Home() {
             <a
               href="#join"
               className="w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-medium bg-[#00e5ff] text-black rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all cursor-pointer"
-              onMouseEnter={() => audioEngine.playClick()}
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
             >
               Join the Sprint
             </a>
             <a
               href="#about"
               className="w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-medium border border-white/20 hover:border-white/50 rounded-full transition-all cursor-pointer"
-              onMouseEnter={() => audioEngine.playClick()}
+              onMouseEnter={triggerHoverEnter}
+              onMouseLeave={triggerHoverLeave}
             >
               Explore Vision
             </a>
@@ -255,95 +380,128 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ABOUT / VISION SECTION */}
-      <section id="about" className="min-h-screen relative flex items-center justify-center px-6 bg-black/20">
-        <div className="max-w-6xl w-full z-10 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-6 font-semibold">01 / The Vision</p>
-            <h2 className="text-4xl md:text-6xl mb-8 font-display text-white leading-tight">
-              Wake Up <br /> Your Momentum
-            </h2>
-            <p className="text-base text-white/60 font-light leading-relaxed mb-6">
-              In the noise of modern engineering, it is easy to become static. TechX Reignite is not a generic hackathon or a traditional lecture hall. It is a flagship workshop and competition sprint designed to reactivate your drive.
-            </p>
-            <p className="text-base text-white/60 font-light leading-relaxed">
-              We gather the finest student developers, hardware builders, and product creators for seven continuous days of system architecture, hardware racing, and collaborative creation. This is where you find your placement.
-            </p>
-          </div>
-          <div className="relative aspect-video rounded-lg overflow-hidden border border-white/10 grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
-            <Image
-              src="/community.png"
-              alt="Engineering Gathering"
-              fill
-              className="object-cover"
-              sizes="(max-w-768px) 100vw, 50vw"
-            />
+      {/* STUDIO PHA5E HORIZONTAL SPRINT SECTION */}
+      <div id="horizontal-sprint" ref={horizontalRef} className="h-screen overflow-hidden bg-black/40 relative">
+        
+        {/* Horizontal Scroll Progress bar (Studio PHA5E Style) */}
+        <div className="absolute bottom-16 left-12 right-12 h-[1px] bg-white/10 z-20 hidden md:block">
+          <div 
+            className="h-full bg-[#00e5ff] transition-all duration-300 ease-out shadow-[0_0_8px_#00e5ff]" 
+            style={{ width: `${panelsProgress * 100}%` }} 
+          />
+          <div className="flex justify-between mt-3 text-[9px] uppercase tracking-[0.2em] text-white/30 font-mono">
+            <span>01 / About</span>
+            <span>02 / DevOps</span>
+            <span>03 / Robo Race</span>
+            <span>04 / Mentorship</span>
+            <span>05 / Ecosystem</span>
           </div>
         </div>
-      </section>
 
-      {/* TRACKS SECTION */}
-      <section id="tracks" className="min-h-screen relative flex flex-col justify-center px-6 md:px-24 py-24 bg-black/40">
-        <div className="max-w-7xl w-full mx-auto z-10">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-4 font-semibold">02 / Event Tracks</p>
-          <h2 className="text-4xl md:text-6xl font-display text-white mb-16 leading-none">Experiences</h2>
+        <div ref={panelsRef} className="flex flex-row flex-nowrap w-[500vw] h-full">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* DevOps */}
-            <div className="group flex flex-col justify-between p-6 h-[420px] border border-white/5 hover:border-white/15 rounded-lg bg-black/50 backdrop-blur-sm transition-all duration-500 hover:translate-y-[-8px]">
+          {/* Panel 1: Vision / About */}
+          <section id="about" className="horizontal-panel w-screen h-full flex items-center justify-center px-12 md:px-24">
+            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <div>
-                <span className="text-xs font-mono text-white/30">01 / CLOUD</span>
-                <h3 className="text-3xl font-display text-white mt-4 mb-2">DevOps</h3>
-                <p className="text-xs text-white/50 font-light leading-relaxed">Build highly available CI/CD infrastructure, container systems, and monitor telemetry parameters.</p>
+                <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-6 font-semibold">01 / The Vision</p>
+                <h2 className="text-4xl md:text-6xl mb-8 font-display text-white leading-tight">
+                  Wake Up <br /> Your Momentum
+                </h2>
+                <p className="text-base text-white/60 font-light leading-relaxed mb-6">
+                  In the noise of modern engineering, it is easy to become static. TechX Reignite is a flagship sprint designed to reactivate your drive.
+                </p>
+                <p className="text-base text-white/60 font-light leading-relaxed">
+                  We gather the finest student developers, hardware builders, and product creators for seven continuous days of system architecture, hardware racing, and collaborative creation. Scroll right to explore the tracks.
+                </p>
               </div>
-              <div className="relative w-full h-[160px] overflow-hidden rounded grayscale group-hover:grayscale-0 transition-all duration-500">
-                <Image src="/devops.png" alt="DevOps Systems" fill className="object-cover" />
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
+                <Image
+                  src="/community.png"
+                  alt="Engineering Gathering"
+                  fill
+                  className="object-cover"
+                  sizes="(max-w-768px) 100vw, 50vw"
+                />
               </div>
             </div>
+          </section>
 
-            {/* Robo Race */}
-            <div className="group flex flex-col justify-between p-6 h-[420px] border border-white/5 hover:border-white/15 rounded-lg bg-black/50 backdrop-blur-sm transition-all duration-500 hover:translate-y-[-8px]">
+          {/* Panel 2: DevOps Track */}
+          <section id="tracks" className="horizontal-panel w-screen h-full flex items-center justify-center px-12 md:px-24">
+            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <div>
-                <span className="text-xs font-mono text-white/30">02 / HARDWARE</span>
-                <h3 className="text-3xl font-display text-white mt-4 mb-2">Robo Race</h3>
-                <p className="text-xs text-white/50 font-light leading-relaxed">Design and assemble custom autonomous driving platforms, configure feedback loops, and race on track.</p>
+                <p className="text-xs uppercase tracking-[0.4em] text-[#00e5ff] mb-6 font-mono font-bold">02 / TRACK ONE</p>
+                <h2 className="text-5xl md:text-7xl font-display text-outline mb-6">DevOps</h2>
+                <p className="text-lg text-white/60 font-light leading-relaxed mb-8">
+                  Configure robust deployment systems, orchestrate containers, and master performance telemetry logs.
+                </p>
+                <div className="text-xs uppercase tracking-widest text-[#00e5ff] font-bold">SYSTEM CONTROL & SCALING</div>
               </div>
-              <div className="relative w-full h-[160px] overflow-hidden rounded grayscale group-hover:grayscale-0 transition-all duration-500">
-                <Image src="/roborace.png" alt="Robo Race Platforms" fill className="object-cover" />
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
+                <Image src="/devops.png" alt="DevOps Systems" fill className="object-cover" sizes="(max-w-768px) 100vw, 50vw" />
               </div>
             </div>
+          </section>
 
-            {/* Mentorship */}
-            <div className="group flex flex-col justify-between p-6 h-[420px] border border-white/5 hover:border-white/15 rounded-lg bg-black/50 backdrop-blur-sm transition-all duration-500 hover:translate-y-[-8px]">
+          {/* Panel 3: Robo Race Track */}
+          <section className="horizontal-panel w-screen h-full flex items-center justify-center px-12 md:px-24">
+            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <div>
-                <span className="text-xs font-mono text-white/30">03 / NETWORK</span>
-                <h3 className="text-3xl font-display text-white mt-4 mb-2">Mentorship</h3>
-                <p className="text-xs text-white/50 font-light leading-relaxed">Collaborate directly with top-tier technology leaders and pioneers from premier engineering firms.</p>
+                <p className="text-xs uppercase tracking-[0.4em] text-[#00e5ff] mb-6 font-mono font-bold">03 / TRACK TWO</p>
+                <h2 className="text-5xl md:text-7xl font-display text-outline mb-6">Robo Race</h2>
+                <p className="text-lg text-white/60 font-light leading-relaxed mb-8">
+                  Construct chassis circuits, adjust PID parameters, and race autonomous machines on the main speedway.
+                </p>
+                <div className="text-xs uppercase tracking-widest text-[#00e5ff] font-bold">HARDWARE SPEED SPRINTS</div>
               </div>
-              <div className="relative w-full h-[160px] overflow-hidden rounded grayscale group-hover:grayscale-0 transition-all duration-500">
-                <Image src="/community.png" alt="Mentorship Networking" fill className="object-cover" />
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
+                <Image src="/roborace.png" alt="Robo Race speedway" fill className="object-cover" sizes="(max-w-768px) 100vw, 50vw" />
               </div>
             </div>
+          </section>
 
-            {/* Community */}
-            <div className="group flex flex-col justify-between p-6 h-[420px] border border-white/5 hover:border-white/15 rounded-lg bg-black/50 backdrop-blur-sm transition-all duration-500 hover:translate-y-[-8px]">
+          {/* Panel 4: Mentorship */}
+          <section className="horizontal-panel w-screen h-full flex items-center justify-center px-12 md:px-24">
+            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <div>
-                <span className="text-xs font-mono text-white/30">04 / ECOSYSTEM</span>
-                <h3 className="text-3xl font-display text-white mt-4 mb-2">Community</h3>
-                <p className="text-xs text-white/50 font-light leading-relaxed">Form lasting networks with hundreds of fellow builders under a single, unified development impulse.</p>
+                <p className="text-xs uppercase tracking-[0.4em] text-[#00e5ff] mb-6 font-mono font-bold">04 / TRACK THREE</p>
+                <h2 className="text-5xl md:text-7xl font-display text-outline mb-6">Mentors</h2>
+                <p className="text-lg text-white/60 font-light leading-relaxed mb-8">
+                  Refine prototypes directly under technology architects and engineering experts from leading enterprises.
+                </p>
+                <div className="text-xs uppercase tracking-widest text-[#00e5ff] font-bold">EXPERT CODE ARCHITECTURE</div>
               </div>
-              <div className="relative w-full h-[160px] overflow-hidden rounded grayscale group-hover:grayscale-0 transition-all duration-500">
-                <Image src="/community.png" alt="Ecosystem Community" fill className="object-cover" />
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
+                <Image src="/community.png" alt="Mentorship Networking" fill className="object-cover" sizes="(max-w-768px) 100vw, 50vw" />
               </div>
             </div>
-          </div>
+          </section>
+
+          {/* Panel 5: Community */}
+          <section className="horizontal-panel w-screen h-full flex items-center justify-center px-12 md:px-24">
+            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+              <div>
+                <p className="text-xs uppercase tracking-[0.4em] text-[#00e5ff] mb-6 font-mono font-bold">05 / TRACK FOUR</p>
+                <h2 className="text-5xl md:text-7xl font-display text-outline mb-6">Ecosystem</h2>
+                <p className="text-lg text-white/60 font-light leading-relaxed mb-8">
+                  Lock in with 140 developers under a shared, unified impulse to build the next layer of technology.
+                </p>
+                <div className="text-xs uppercase tracking-widest text-[#00e5ff] font-bold">UNIFIED IMPULSE CO-CREATION</div>
+              </div>
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
+                <Image src="/community.png" alt="Ecosystem Community" fill className="object-cover" sizes="(max-w-768px) 100vw, 50vw" />
+              </div>
+            </div>
+          </section>
+
         </div>
-      </section>
+      </div>
 
       {/* TIMELINE SECTION */}
       <section id="timeline" className="min-h-screen relative flex flex-col justify-center px-6 py-24 bg-black/20">
         <div className="max-w-4xl w-full mx-auto z-10">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-4 font-semibold">03 / The Schedule</p>
+          <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-4 font-semibold">06 / The Schedule</p>
           <h2 className="text-4xl md:text-6xl font-display text-white mb-16 leading-none">The 7-Day Sprint</h2>
           
           <div className="timeline-container pl-8 md:pl-0">
@@ -374,15 +532,15 @@ export default function Home() {
         <div className="max-w-4xl w-full text-center z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-3xl mx-auto">
             <div className="p-6 rounded-lg bg-black/25 border border-white/5 hover:border-[#00e5ff]/20 transition-all">
-              <span className="block text-7xl font-display text-[#00e5ff] font-extrabold tracking-tighter mb-2">140</span>
+              <span className="block text-7xl font-display text-outline mb-2">140</span>
               <span className="text-xs uppercase tracking-[0.2em] text-white/50 font-light">Engineers Registered</span>
             </div>
             <div className="p-6 rounded-lg bg-black/25 border border-white/5 hover:border-[#00e5ff]/20 transition-all">
-              <span className="block text-7xl font-display text-[#00e5ff] font-extrabold tracking-tighter mb-2">7</span>
+              <span className="block text-7xl font-display text-outline mb-2">7</span>
               <span className="text-xs uppercase tracking-[0.2em] text-white/50 font-light">Days of Building</span>
             </div>
             <div className="p-6 rounded-lg bg-black/25 border border-white/5 hover:border-[#00e5ff]/20 transition-all">
-              <span className="block text-7xl font-display text-[#00e5ff] font-extrabold tracking-tighter mb-2">1</span>
+              <span className="block text-7xl font-display text-outline mb-2">1</span>
               <span className="text-xs uppercase tracking-[0.2em] text-white/50 font-light">Flagship Gathering</span>
             </div>
           </div>
@@ -392,7 +550,7 @@ export default function Home() {
       {/* FAQ SECTION */}
       <section id="faq" className="min-h-screen relative flex flex-col justify-center px-6 py-24 bg-black/20">
         <div className="max-w-3xl w-full mx-auto z-10">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-4 font-semibold">04 / Support</p>
+          <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-4 font-semibold">07 / Support</p>
           <h2 className="text-4xl md:text-6xl font-display text-white mb-16 leading-none">Common Questions</h2>
           
           <div className="flex flex-col gap-4">
@@ -404,6 +562,8 @@ export default function Home() {
                 <button
                   onClick={() => toggleFaq(idx)}
                   className="w-full flex items-center justify-between text-left py-2 text-white hover:text-[#00e5ff] transition-all cursor-pointer"
+                  onMouseEnter={triggerHoverEnter}
+                  onMouseLeave={triggerHoverLeave}
                 >
                   <span className="text-lg md:text-xl font-medium tracking-wide">{item.question}</span>
                   <ChevronDown className={`w-5 h-5 faq-chevron ${openFaq === idx ? "open" : ""}`} />
@@ -423,9 +583,13 @@ export default function Home() {
       <section id="join" className="min-h-screen relative flex items-center justify-center px-6 text-center">
         <div className="max-w-2xl z-10">
           <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-8 font-semibold">Ready to begin</p>
-          <h2 className="text-5xl md:text-8xl font-display text-white mb-6 leading-none">
-            Find Your Place
+          <h2 className="text-5xl md:text-8xl font-display text-white mb-2 leading-none">
+            Find Your
           </h2>
+          <h2 className="text-5xl md:text-8xl font-display text-outline mb-6 leading-none">
+            Placement
+          </h2>
+          
           <p className="text-sm md:text-base text-white/50 font-light tracking-wide mb-12 max-w-md mx-auto leading-relaxed">
             The workspace is set. The tracks are configured. Join the next generation of builders at TechX.
           </p>
@@ -435,7 +599,8 @@ export default function Home() {
               audioEngine.playSwell();
               alert("Registration system initiated. Welcome to TechX Reignite.");
             }}
-            onMouseEnter={() => audioEngine.playClick()}
+            onMouseEnter={triggerHoverEnter}
+            onMouseLeave={triggerHoverLeave}
             className="px-12 py-5 text-xs uppercase tracking-[0.3em] font-semibold bg-[#00e5ff] text-black rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all cursor-pointer"
           >
             Claim Your Spot
