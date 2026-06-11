@@ -117,13 +117,13 @@ export default function Hero({ onComplete }: HeroProps) {
   }, [onComplete]);
 
   return (
-    <section id="hero" className="min-h-screen relative flex items-center justify-center px-6 pt-20 text-center">
-      <div className="max-w-5xl z-10 w-full flex flex-col items-center">
+    <section id="hero" className="min-h-screen relative flex items-center justify-center px-6 md:px-16 lg:px-24 pt-20 text-center">
+      <div className="max-w-6xl z-10 w-full flex flex-col items-center">
         <p className="reveal-item delay-1 text-xs uppercase tracking-[0.3em] text-accent mb-6 filter drop-shadow-[0_0_8px_rgba(191,199,207,0.4)] font-semibold font-mono">
           July 13 - 19, 2026 | SCT College of Engineering
         </p>
 
-        <div className="hero-type-wrapper w-full max-w-[340px] sm:max-w-[480px] md:max-w-[600px] mb-10">
+        <div className="hero-type-wrapper w-full max-w-[290px] xs:max-w-[340px] sm:max-w-[480px] md:max-w-[600px] mb-10">
           <svg
             className="w-full overflow-visible"
             viewBox="0 0 500 175"

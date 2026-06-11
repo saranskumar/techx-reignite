@@ -47,7 +47,7 @@ export default function Footer() {
       {/* Soft background ambient gradient */}
       <div className="absolute bottom-0 left-1/3 w-[450px] h-[450px] rounded-full bg-[var(--accent-glow)] filter blur-[100px] pointer-events-none opacity-20" />
 
-      <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-6xl mx-auto px-6 md:px-16 lg:px-24 relative z-10">
         
         {/* Main Footer Links Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-12 mb-20">

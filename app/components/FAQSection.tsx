@@ -20,11 +20,11 @@ export default function FAQSection({ faqData }: FAQSectionProps) {
   };
 
   return (
-    <section id="faq" className="min-h-screen relative flex items-center justify-center px-6 py-28 bg-[#1B1B1A]/20 overflow-hidden">
+    <section id="faq" className="min-h-screen relative flex items-center justify-center px-6 md:px-16 lg:px-24 py-20 md:py-28 bg-[#1B1B1A]/20 overflow-hidden">
       {/* Background glow overlay */}
       <div className="absolute bottom-1/4 right-0 w-[350px] h-[350px] rounded-full bg-[var(--accent-glow)] filter blur-[80px] pointer-events-none opacity-20" />
 
-      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-start z-10">
+      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start z-10">
         
         {/* Left Column - Sticky Section Details */}
         <div className="lg:col-span-4 lg:sticky lg:top-28">

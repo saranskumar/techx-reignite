@@ -156,22 +156,26 @@ export default function Home() {
       });
     });
 
-    // Horizontal sliding panel animation using GSAP pinning
-    const panels = gsap.utils.toArray(".horizontal-panel");
-    gsap.to(panels, {
-      xPercent: -100 * (panels.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: horizontalRef.current,
-        pin: true,
-        scrub: 1,
-        start: "top top",
-        end: () => `+=${panelsRef.current?.clientWidth || 2000}`,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          setPanelsProgress(self.progress);
+    const mm = gsap.matchMedia();
+
+    // Horizontal sliding panel animation using GSAP pinning — desktop/tablet only (>= 768px)
+    mm.add("(min-width: 768px)", () => {
+      const panels = gsap.utils.toArray(".horizontal-panel");
+      gsap.to(panels, {
+        xPercent: -100 * (panels.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: horizontalRef.current,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: () => `+=${panelsRef.current?.clientWidth || 2000}`,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            setPanelsProgress(self.progress);
+          },
         },
-      },
+      });
     });
 
     // Animate The Pulse size and intensity along scroll
@@ -218,6 +222,7 @@ export default function Home() {
     });
 
     return () => {
+      mm.revert();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -259,7 +264,7 @@ export default function Home() {
         <Hero onComplete={handleHeroComplete} />
 
         {/* STUDIO PHA5E HORIZONTAL SPRINT SECTION */}
-        <div id="horizontal-sprint" ref={horizontalRef} className="h-screen overflow-hidden bg-black/40 relative">
+        <div id="horizontal-sprint" ref={horizontalRef} className="h-auto md:h-screen overflow-visible md:overflow-hidden bg-black/40 relative py-12 md:py-0">
           
           {/* Horizontal Scroll Progress bar */}
           <div className="absolute bottom-16 left-12 right-12 h-[1px] bg-white/10 z-20 hidden md:block">
@@ -276,7 +281,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div ref={panelsRef} className="flex flex-row flex-nowrap w-[500vw] h-full">
+          <div ref={panelsRef} className="flex flex-col md:flex-row md:flex-nowrap w-full md:w-[500vw] h-auto md:h-full gap-16 md:gap-0">
             <AboutPanel />
             <TrackPanel 
               index="02 / TRACK ONE"

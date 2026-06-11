@@ -26,11 +26,11 @@ export default function JoinSection() {
   ];
 
   return (
-    <section id="join" className="min-h-screen relative flex items-center justify-center px-6 py-28 text-center bg-[#1B1B1A]/40 overflow-hidden">
+    <section id="join" className="min-h-screen relative flex items-center justify-center px-6 md:px-16 lg:px-24 py-20 md:py-28 text-center bg-[#1B1B1A]/40 overflow-hidden">
       {/* Background glow overlay */}
       <div className="absolute top-1/3 right-1/4 w-[380px] h-[380px] rounded-full bg-[var(--accent-glow)] filter blur-[90px] pointer-events-none opacity-20" />
 
-      <div className="max-w-5xl z-10 w-full">
+      <div className="max-w-6xl z-10 w-full">
         <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-4 font-semibold">
           08 / Registration
         </p>

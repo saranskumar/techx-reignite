@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function AboutPanel() {
   return (
-    <section id="about" className="horizontal-panel w-screen h-full flex items-center justify-center px-12 md:px-24">
+    <section id="about" className="horizontal-panel w-full md:w-screen h-auto md:h-full flex items-center justify-center px-6 md:px-16 lg:px-24 py-12 md:py-0">
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
         <div className="flex flex-col">
           <p className="text-[10px] uppercase tracking-[0.4em] text-accent mb-4 font-mono font-bold">01 / The Vision</p>
@@ -46,7 +46,7 @@ export default function AboutPanel() {
         </div>
 
         <div className="[perspective:1000px] group/tilt">
-          <div className="relative aspect-video rounded-lg overflow-hidden border border-primary-border grayscale shadow-2xl transition-transform duration-800 ease-[cubic-bezier(0.16,1,0.3,1)] [transform-style:preserve-3d] w-full h-full group-hover/tilt:[transform:rotateY(-8deg)_rotateX(4deg)_scale(0.98)]">
+          <div className="relative aspect-video rounded-lg overflow-hidden border border-primary-border grayscale shadow-2xl transition-transform duration-800 ease-[cubic-bezier(0.16,1,0.3,1)] [transform-style:preserve-3d] w-full group-hover/tilt:[transform:rotateY(-8deg)_rotateX(4deg)_scale(0.98)]">
             <Image
               src="/community.png"
               alt="Engineering Gathering"

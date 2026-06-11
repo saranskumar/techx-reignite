@@ -28,11 +28,11 @@ export default function TimelineSection({ timelineData }: TimelineSectionProps) 
   };
 
   return (
-    <section id="timeline" className="min-h-screen relative flex items-center justify-center px-6 py-28 bg-[#1B1B1A]/40 overflow-hidden">
+    <section id="timeline" className="min-h-screen relative flex items-center justify-center px-6 md:px-16 lg:px-24 py-20 md:py-28 bg-[#1B1B1A]/40 overflow-hidden">
       {/* Background glow overlay */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-[var(--accent-glow)] filter blur-[90px] pointer-events-none opacity-20" />
 
-      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-start z-10">
+      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start z-10">
         
         {/* Left Column - Sticky Editorial Headers */}
         <div className="lg:col-span-4 lg:sticky lg:top-28">
