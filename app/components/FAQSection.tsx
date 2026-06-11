@@ -41,20 +41,27 @@ export default function FAQSection({ faqData }: FAQSectionProps) {
           {/* Quick Support Card widget */}
           <div className="bg-[#2A2A28]/25 border border-white/5 rounded-xl p-5 flex flex-col gap-4 max-w-sm">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+              <div className="w-8.5 h-8.5 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent flex-shrink-0">
                 <Mail className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-[10px] uppercase tracking-wider text-white/40 block font-mono">Need Help?</span>
-                <a href="mailto:ieee@sctce.ac.in" className="text-xs text-white/80 hover:text-accent font-semibold transition-colors">
-                  ieee@sctce.ac.in
+                <span className="text-[9px] uppercase tracking-wider text-white/40 block font-mono">Email Support</span>
+                <a href="mailto:mailtoieeesctsb@gmail.com" className="text-xs text-white/80 hover:text-accent font-semibold transition-colors font-mono">
+                  mailtoieeesctsb@gmail.com
                 </a>
               </div>
             </div>
             <div className="h-[1px] bg-white/5 w-full" />
-            <p className="text-[10px] text-white/30 font-light leading-relaxed">
-              Our support representatives are active 24/7 during the sprint to help clarify event logs, system failures, and ticket details.
-            </p>
+            <div className="flex flex-col gap-2.5">
+              <div className="flex items-center justify-between text-xs text-white/50">
+                <span className="font-light">Alfy (Support Lead)</span>
+                <a href="tel:+919567694707" className="font-mono text-accent hover:text-white hover:underline transition-colors font-bold">+91 9567694707</a>
+              </div>
+              <div className="flex items-center justify-between text-xs text-white/50">
+                <span className="font-light">Agraja (Support Lead)</span>
+                <a href="tel:+919496749043" className="font-mono text-accent hover:text-white hover:underline transition-colors font-bold">+91 9496749043</a>
+              </div>
+            </div>
           </div>
         </div>
 

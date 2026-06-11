@@ -1,6 +1,38 @@
 "use client";
 
-import { ArrowUp, Mail, ExternalLink } from "lucide-react";
+import { ArrowUp, Mail, ExternalLink, Phone, Globe, MessageCircle } from "lucide-react";
+
+const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+);
+
+const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -99,33 +131,81 @@ export default function Footer() {
               <ul className="flex flex-col gap-3.5 md:items-end w-full">
                 <li>
                   <a
-                    href="https://instagram.com"
+                    href="https://ieeesctsb.org/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group text-sm text-white/60 hover:text-white transition-colors py-1 inline-flex items-center gap-1.5 font-light"
                   >
+                    <Globe className="w-3.5 h-3.5 opacity-45 group-hover:opacity-100 transition-opacity" />
+                    <span>Website</span>
+                    <ExternalLink className="w-3 h-3 opacity-30 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/ieeesctsb/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group text-sm text-white/60 hover:text-white transition-colors py-1 inline-flex items-center gap-1.5 font-light"
+                  >
+                    <InstagramIcon className="w-3.5 h-3.5 opacity-45 group-hover:opacity-100 transition-opacity" />
                     <span>Instagram</span>
                     <ExternalLink className="w-3 h-3 opacity-30 group-hover:opacity-100 transition-opacity" />
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://linkedin.com"
+                    href="https://in.linkedin.com/company/ieeesctsb"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group text-sm text-white/60 hover:text-white transition-colors py-1 inline-flex items-center gap-1.5 font-light"
                   >
+                    <LinkedinIcon className="w-3.5 h-3.5 opacity-45 group-hover:opacity-100 transition-opacity" />
                     <span>LinkedIn</span>
                     <ExternalLink className="w-3 h-3 opacity-30 group-hover:opacity-100 transition-opacity" />
                   </a>
                 </li>
                 <li>
                   <a
-                    href="mailto:ieee@sctce.ac.in"
+                    href="https://whatsapp.com/channel/0029Vakj3LDKLaHsJxbxMG0K"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group text-sm text-white/60 hover:text-white transition-colors py-1 inline-flex items-center gap-1.5 font-light"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 opacity-45 group-hover:opacity-100 transition-opacity" />
+                    <span>WhatsApp</span>
+                    <ExternalLink className="w-3 h-3 opacity-30 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="mailto:mailtoieeesctsb@gmail.com"
                     className="group text-sm text-white/60 hover:text-accent transition-colors py-1 inline-flex items-center gap-1.5 font-light"
                   >
-                    <Mail className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />
+                    <Mail className="w-3.5 h-3.5 opacity-45 group-hover:opacity-100 transition-opacity" />
                     <span>Email Support</span>
+                  </a>
+                </li>
+                <li className="h-[1px] bg-white/5 w-24 my-2 md:ml-auto" />
+                <li className="text-[10px] uppercase tracking-[0.2em] font-mono text-white/40 md:text-right mt-1">
+                  Support Contacts
+                </li>
+                <li>
+                  <a
+                    href="tel:+919567694707"
+                    className="group text-xs text-white/50 hover:text-accent transition-colors py-0.5 inline-flex items-center gap-1.5 font-mono"
+                  >
+                    <Phone className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity" />
+                    <span>Alfy: +91 9567694707</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="tel:+919496749043"
+                    className="group text-xs text-white/50 hover:text-accent transition-colors py-0.5 inline-flex items-center gap-1.5 font-mono"
+                  >
+                    <Phone className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity" />
+                    <span>Agraja: +91 9496749043</span>
                   </a>
                 </li>
               </ul>
