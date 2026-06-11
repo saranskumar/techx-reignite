@@ -5,37 +5,53 @@ import Image from "next/image";
 export default function AboutPanel() {
   return (
     <section id="about" className="horizontal-panel w-screen h-full flex items-center justify-center px-12 md:px-24">
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <div className="flex flex-col max-h-[450px]">
-          <p className="text-xs uppercase tracking-[0.4em] text-accent mb-4 font-mono font-bold">01 / The Vision</p>
+      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div className="flex flex-col">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-accent mb-4 font-mono font-bold">01 / The Vision</p>
           <h2 className="text-3xl md:text-5xl mb-6 font-display text-white leading-none">
-            About TechX <br /> Reignite
+            About <br /> Reignite
           </h2>
-          <div className="space-y-4 text-xs md:text-sm text-secondary-text/60 font-light leading-relaxed overflow-y-auto pr-4 max-h-[280px]">
-            <p>
-              This flagship technology and professional development initiative of the IEEE Computer Society SCT Student Branch Chapter is designed to bring together students, innovators, and future leaders through an immersive multi-day experience.
+          
+          <div className="space-y-6 text-xs md:text-sm text-secondary-text/60 font-light leading-relaxed">
+            <p className="text-white/80 font-normal leading-relaxed text-sm md:text-base">
+              A flagship initiative by IEEE CS SCT SBC designed to spark collaboration, build technical culture, and nurture industry-ready talent through an immersive multi-day sprint.
             </p>
-            <p>
-              Our chapter has a decorated legacy of excellence, recognized with the <strong>Outstanding Student Branch Chapter Award in 2022</strong>, the <strong>Best Student Branch Chapter of IEEE SCT SB in 2024</strong>, and as part of IEEE SCT SB's consecutive three-year win of the <strong>Regional Exemplary Student Branch Award</strong>. Notably, we were the <strong>only Student Branch to win the Darrel Chong Gold</strong> in the Kerala Section in 2024.
-            </p>
-            <p>
-              Built on the pillars of Technology, Training, Engagement, and Leadership, this program goes beyond conventional workshops. The event features hands-on technical workshops, competitive challenges, and expert-led sessions designed to build technical depth and self-leadership.
-            </p>
-            <p>
-              With 6+ collaborations planned - including <strong>IEEE CS SYP, IEEE CS Kerala Chapter, IEEE ComSoc Kerala Chapter, IEEE CS GEC Barton Hill SBC, IEEE CS CE Attingal SBC, IEEE IAS SCT SBC, and IEEE EMBS SCT SBC</strong> - this initiative creates a massive platform for community engagement and exposure across the entire IEEE Kerala Section and India Council.
-            </p>
-            <p className="text-accent font-medium font-display uppercase tracking-wider text-xs pt-2">
-              Join 140 participants in an inclusive ecosystem designed to spark collaboration, build technical culture, and nurture industry-ready talent.
-            </p>
+
+            <div className="grid grid-cols-2 gap-6 pt-6 border-t border-primary-border">
+              <div>
+                <span className="text-[9px] uppercase tracking-widest text-accent font-bold font-mono block mb-2">Legacy</span>
+                <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                  Darrel Chong Gold (2024), Best SBC (2024), and Outstanding SBC Award (2022).
+                </p>
+              </div>
+              <div>
+                <span className="text-[9px] uppercase tracking-widest text-accent font-bold font-mono block mb-2">Collaborations</span>
+                <p className="text-[11px] text-white/50 leading-relaxed font-light">
+                  IEEE CS SYP, Kerala Chapter, ComSoc, GECBH, CEA, IAS, & EMBS.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <span className="text-[9px] uppercase tracking-widest text-white/30 font-bold font-mono block mb-2">Pillars</span>
+              <div className="flex flex-wrap gap-2">
+                {["Technology", "Training", "Engagement", "Leadership"].map((pillar) => (
+                  <span key={pillar} className="px-3 py-1 text-[9px] uppercase tracking-wider font-mono bg-primary-card border border-primary-border rounded-full text-white/60">
+                    {pillar}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-        <div className="perspective-3d">
-          <div className="tilt-wrapper relative aspect-video rounded-lg overflow-hidden border border-white/15 grayscale shadow-2xl">
+
+        <div className="[perspective:1000px] group/tilt">
+          <div className="relative aspect-video rounded-lg overflow-hidden border border-primary-border grayscale shadow-2xl transition-transform duration-800 ease-[cubic-bezier(0.16,1,0.3,1)] [transform-style:preserve-3d] w-full h-full group-hover/tilt:[transform:rotateY(-8deg)_rotateX(4deg)_scale(0.98)]">
             <Image
               src="/community.png"
               alt="Engineering Gathering"
               fill
-              className="object-cover"
+              className="object-cover opacity-85 hover:opacity-100 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/tilt:scale-108"
               sizes="(max-w-768px) 100vw, 50vw"
             />
           </div>

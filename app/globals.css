@@ -3,9 +3,9 @@
 @import "tailwindcss";
 
 :root {
-  --bg-color: #0B0B0B;
-  --bg-card: #151515;
-  --border-color: #222222;
+  --bg-color: #212120;   /* Soft charcoal */
+  --bg-card: #2A2A28;
+  --border-color: #333331;
   --text-color: #F6F6F6;
   --text-muted: #EAEAEA;
   --accent-color: #BFC7CF; /* Ice Mist */
@@ -38,57 +38,7 @@ html, body {
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-/* Studio PHA5E Custom Dual Cursor followers */
-.custom-cursor-ring,
-.custom-cursor-dot {
-  display: none;
-}
 
-@media (pointer: fine) {
-  .custom-cursor-ring {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 32px;
-    height: 32px;
-    border: 1.5px solid var(--accent-glow);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    transform: translate(-50%, -50%);
-    will-change: transform;
-    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    mix-blend-mode: difference;
-  }
-  
-  .custom-cursor-ring.hovered {
-    width: 64px;
-    height: 64px;
-    background-color: var(--accent-glow);
-    border-color: var(--accent-color);
-    box-shadow: 0 0 20px var(--accent-glow);
-  }
-
-  .custom-cursor-dot {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 4px;
-    background-color: var(--accent-color);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10001;
-    transform: translate(-50%, -50%);
-    will-change: transform;
-    mix-blend-mode: difference;
-  }
-}
 
 /* Monumental Editorial Headers */
 h1, h2, h3, .font-display {
@@ -140,36 +90,27 @@ h1, h2, h3, .font-display {
   }
 }
 
-/* PHA5E-style Transparent Stroked Typography */
-.text-outline {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
-  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-              -webkit-text-stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-              text-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+
+/* Outlined SVG Typography with Bottom-to-Top Fill Mask */
+.outlined-svg-text {
+  overflow: visible;
 }
 
-.text-outline:hover {
-  color: var(--accent-color);
-  -webkit-text-stroke: 1px transparent;
-}
-
-/* Self-Drawing SVG Typography Stroke */
 .outlined-svg-text text {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.2);
-  stroke-width: 1.5;
   stroke-dasharray: 1200;
   stroke-dashoffset: 1200;
-  animation: drawOutline 3.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transition: fill 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-              stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: drawOutline 6.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.outlined-svg-text:hover text {
-  fill: var(--accent-color);
-  stroke: transparent;
+.clip-rect {
+  transform: translateY(100px);
+  transition: transform 1.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Hero section: hover on the wrapper div triggers the fill reveal */
+.hero-type-wrapper:hover .clip-rect {
+  transform: translateY(0);
 }
 
 @keyframes drawOutline {
@@ -214,95 +155,7 @@ h1, h2, h3, .font-display {
   overflow: hidden;
 }
 
-/* Professional Timeline Layout */
-.timeline-container {
-  position: relative;
-}
 
-.timeline-line {
-  position: absolute;
-  left: 16px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1) 10%, rgba(255, 255, 255, 0.1) 90%, transparent);
-}
-
-@media (min-width: 768px) {
-  .timeline-line {
-    left: 50%;
-  }
-}
-
-.timeline-dot {
-  position: absolute;
-  left: 11px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background-color: #050505;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-.timeline-item:hover .timeline-dot {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 10px var(--accent-color);
-}
-
-@media (min-width: 768px) {
-  .timeline-dot {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
-/* FAQ Accordion Transitions */
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s linear;
-  opacity: 0;
-}
-
-.faq-answer.open {
-  max-height: 200px;
-  opacity: 1;
-  margin-top: 16px;
-}
-
-.faq-chevron {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.faq-chevron.open {
-  transform: rotate(180deg);
-  color: var(--accent-color);
-}
-
-/* 3D Perspective Hover Image Tilting */
-.perspective-3d {
-  perspective: 1000px;
-}
-
-.tilt-wrapper {
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-style: preserve-3d;
-  width: 100%;
-  height: 100%;
-}
-
-.perspective-3d:hover .tilt-wrapper {
-  transform: rotateY(-8deg) rotateX(4deg) scale(0.98);
-}
-
-.perspective-3d img {
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-.perspective-3d:hover img {
-  transform: scale(1.08);
-}
 
 /* Premium Typography slight horizontal compression */
 .compressed-header {
@@ -367,3 +220,22 @@ h1, h2, h3, .font-display {
 .hamburger-line {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }
+
+/* Cascading Entrance Animations */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.visible-state .reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 100ms; }
+.delay-2 { transition-delay: 250ms; }
+.delay-3 { transition-delay: 400ms; }
+.delay-4 { transition-delay: 550ms; }
+.delay-5 { transition-delay: 700ms; }

@@ -1,49 +1,246 @@
 "use client";
 
-export default function Hero() {
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+
+interface HeroProps {
+  onComplete?: () => void;
+}
+
+export default function Hero({ onComplete }: HeroProps) {
+  const techxOutlineRef    = useRef<SVGTextElement>(null);
+  const reigniteOutlineRef = useRef<SVGTextElement>(null);
+  const techxFillRef       = useRef<SVGTextElement>(null);
+  const reigniteFillRef    = useRef<SVGTextElement>(null);
+  const techxClipRef       = useRef<SVGRectElement>(null);
+
+  useEffect(() => {
+    const tO = techxOutlineRef.current;
+    const rO = reigniteOutlineRef.current;
+    const rF = reigniteFillRef.current;
+    const tF = techxFillRef.current;
+    const tC = techxClipRef.current;
+    if (!tO || !rO || !rF || !tF || !tC) return;
+
+    const alignElements = () => {
+      if (!tO || !rO || !rF) return;
+      const txBBox = tO.getBBox();
+      const rightEdge = txBBox.x + txBBox.width;
+      rO.setAttribute("x", String(rightEdge));
+      rF.setAttribute("x", String(rightEdge));
+    };
+
+    // Align initially
+    alignElements();
+
+    const timers: NodeJS.Timeout[] = [];
+
+    // Create GSAP Context for React Strict Mode safety
+    const ctx = gsap.context(() => {
+      const WIDE_X = -1000;
+      const WIDE_W = 3000;
+
+      gsap.set(tC, {
+        attr: {
+          x: WIDE_X,
+          y: 130, // Well below TECHX baseline of 90
+          width: WIDE_W,
+          height: 0,
+        },
+      });
+
+      gsap.set([tO, rO], { strokeDasharray: 2000, strokeDashoffset: 2000 });
+
+      document.fonts.ready.then(() => {
+        requestAnimationFrame(() => {
+          alignElements();
+
+          const tl = gsap.timeline({
+            onComplete: () => {
+              alignElements();
+              if (onComplete) {
+                onComplete();
+              }
+            }
+          });
+
+          // 1. Draw both outlines simultaneously — slow, deliberate
+          tl.to([tO, rO], {
+            strokeDashoffset: 0,
+            duration: 3.8,
+            ease: "power1.inOut",
+          });
+
+          // 2. Fill TECHX bottom → top to safe bounds (starts at 1.0s into drawing)
+          // (covers y=-45 to y=130, fully wrapping y=90 text)
+          // Using power2.out ease for a smooth liquid fluid style progression
+          tl.to(tC, {
+            attr: {
+              y: -45,
+              height: 175,
+            },
+            duration: 1.8,
+            ease: "power2.out",
+          }, 1.0);
+
+          // 3. Fade out outline of TECHX only (triggered right when fill completes at 2.8s)
+          tl.to(tO, { opacity: 0, duration: 0.35 }, 2.8);
+
+          // 4. Fade REIGNITE outline to its subtle default state (strokeOpacity 0.2)
+          tl.to(rO, { strokeOpacity: 0.2, duration: 0.35 }, 3.0);
+
+          // 5. Brief hold before complete callback
+          tl.to({}, { duration: 0.3 });
+
+          requestAnimationFrame(alignElements);
+        });
+      });
+    });
+
+    timers.push(
+      setTimeout(alignElements, 150),
+      setTimeout(alignElements, 600),
+      setTimeout(alignElements, 1500),
+      setTimeout(alignElements, 4000)
+    );
+
+    const handleResize = () => {
+      alignElements();
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      ctx.revert();
+      timers.forEach(clearTimeout);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [onComplete]);
+
   return (
     <section id="hero" className="min-h-screen relative flex items-center justify-center px-6 pt-20 text-center">
-      <div className="max-w-5xl z-10 w-full">
-        <p className="text-xs uppercase tracking-[0.3em] text-accent mb-6 filter drop-shadow-[0_0_8px_rgba(191,199,207,0.4)] font-semibold">
+      <div className="max-w-5xl z-10 w-full flex flex-col items-center">
+        <p className="reveal-item delay-1 text-xs uppercase tracking-[0.3em] text-accent mb-6 filter drop-shadow-[0_0_8px_rgba(191,199,207,0.4)] font-semibold font-mono">
           July 13 - 19, 2026 | SCT College of Engineering
         </p>
-        
-        {/* Monumental Typography with SVG self-drawing stroke animation */}
-        <div className="w-full flex flex-col items-center justify-center mb-12">
-          <h1 className="text-7xl sm:text-8xl md:text-9xl mb-2 font-display text-white leading-none tracking-tighter">
-            TECHX
-          </h1>
-          <svg 
-            className="outlined-svg-text w-full max-w-lg md:max-w-2xl h-24 md:h-36 overflow-visible select-none" 
-            viewBox="0 0 600 100"
+
+        <div className="hero-type-wrapper w-full max-w-[340px] sm:max-w-[480px] md:max-w-[600px] mb-10">
+          <svg
+            className="w-full overflow-visible"
+            viewBox="0 0 500 175"
           >
-            <text 
-              x="50%" 
-              y="70%" 
-              textAnchor="middle" 
-              className="font-display font-extrabold text-6xl md:text-8xl tracking-tight"
+            <defs>
+              <clipPath id="hero-techx-clip" clipPathUnits="userSpaceOnUse">
+                <rect ref={techxClipRef} x="-1000" y="130" width="3000" height="0" />
+              </clipPath>
+              <clipPath id="hero-reignite-clip" clipPathUnits="userSpaceOnUse">
+                <rect x="-1000" y="80" width="3000" height="100" className="clip-rect" />
+              </clipPath>
+            </defs>
+
+            {/* ── TECHX OUTLINE (drawn on load) ── */}
+            <text
+              ref={techxOutlineRef}
+              x="250" y="90" textAnchor="middle"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 800,
+                fontSize: "110px",
+                letterSpacing: "-1px",
+                strokeDasharray: 2000,
+                strokeDashoffset: 2000,
+              }}
+              fill="none"
+              stroke="var(--accent-color)"
+              strokeWidth="1.5"
+            >
+              TECHX
+            </text>
+
+            {/* ── REIGNITE OUTLINE (drawn on load) ── */}
+            <text
+              ref={reigniteOutlineRef}
+              x="470" y="152" textAnchor="end"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 800,
+                fontSize: "52px",
+                letterSpacing: "-1px",
+                strokeDasharray: 2000,
+                strokeDashoffset: 2000,
+              }}
+              fill="none"
+              stroke="var(--accent-color)"
+              strokeWidth="1.2"
+            >
+              REIGNITE
+            </text>
+
+            {/* ── TECHX SOLID FILL (revealed on load) ── */}
+            <text
+              ref={techxFillRef}
+              x="250" y="90" textAnchor="middle"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 800,
+                fontSize: "110px",
+                letterSpacing: "-1px",
+              }}
+              fill="var(--accent-color)"
+              clipPath="url(#hero-techx-clip)"
+            >
+              TECHX
+            </text>
+
+            {/* ── REIGNITE SOLID FILL (revealed on hover) ── */}
+            <text
+              ref={reigniteFillRef}
+              x="470" y="152" textAnchor="end"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 800,
+                fontSize: "52px",
+                letterSpacing: "-1px",
+              }}
+              fill="var(--accent-color)"
+              clipPath="url(#hero-reignite-clip)"
             >
               REIGNITE
             </text>
           </svg>
         </div>
-        
-        <p className="text-sm md:text-lg tracking-[0.25em] text-white/70 uppercase max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+
+        <p className="reveal-item delay-3 text-xs md:text-sm tracking-[0.25em] text-white/60 uppercase mb-12 leading-relaxed font-light">
           Powering Minds, One spark at a time
         </p>
-        
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+
+        <div className="reveal-item delay-4 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
           <a
             href="#join"
-            className="w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold bg-accent text-black rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(191,199,207,0.4)] transition-all cursor-pointer"
+            className="group w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold bg-accent text-[#0B0B0B] border border-accent rounded-full hover:bg-transparent hover:text-accent transition-all duration-300 cursor-pointer text-center flex items-center justify-center gap-2"
           >
-            Join the Sprint
+            <span>Join the Sprint</span>
+            <svg 
+              className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
           </a>
           <a
             href="#about"
-            className="w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold border border-white/20 hover:border-white/50 rounded-full transition-all cursor-pointer"
+            className="group w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold border border-white/20 hover:border-accent hover:text-accent rounded-full transition-all duration-300 cursor-pointer text-center flex items-center justify-center gap-2"
           >
-            Explore Vision
+            <span>Explore Vision</span>
+            <svg 
+              className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-y-1" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </a>
         </div>
       </div>

@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { audioEngine } from "@/app/utils/audio";
 
 // Composable Layout Components
 import CustomCursor from "./components/CustomCursor";
@@ -12,9 +11,9 @@ import Hero from "./components/Hero";
 import AboutPanel from "./components/AboutPanel";
 import TrackPanel from "./components/TrackPanel";
 import TimelineSection from "./components/TimelineSection";
-import StatsSection from "./components/StatsSection";
 import FAQSection from "./components/FAQSection";
 import JoinSection from "./components/JoinSection";
+import Footer from "./components/Footer";
 import ScrollIndicator from "./components/ScrollIndicator";
 
 if (typeof window !== "undefined") {
@@ -27,10 +26,9 @@ export default function Home() {
   const horizontalRef = useRef<HTMLDivElement>(null);
   const panelsRef = useRef<HTMLDivElement>(null);
 
-  const [muted, setMuted] = useState(true);
   const [activeSection, setActiveSection] = useState("hero");
-  const [pulseCount, setPulseCount] = useState(0);
   const [panelsProgress, setPanelsProgress] = useState(0);
+  const [showContent, setShowContent] = useState(false);
 
   const faqData = [
     {
@@ -47,7 +45,39 @@ export default function Home() {
     },
     {
       question: "What hardware or software do I need to bring?",
-      answer: "All participants should bring their personal laptops. For specialized tracks like Robo Race, high-end microcontrollers, testing equipment, and racing tracks will be fully provided by the organization."
+      answer: "All participants should bring their personal laptops. For specialized tracks, testing equipment and physical prototyping hardware will be fully provided by the organization."
+    },
+    {
+      question: "What are the ticket prices for the event?",
+      answer: "Tickets are priced based on your registration status: ₹200 for IEEE Computer Society members, ₹300 for general IEEE members, and ₹400 for non-IEEE members."
+    },
+    {
+      question: "Where is the event venue?",
+      answer: "Pre-events (Days 1 to 4) including tech talks and webinars will be held online. The main flagship inauguration and hands-on workshops (Days 5 to 7) will take place offline at Sree Chitra Thirunal College of Engineering (SCTCE)."
+    },
+    {
+      question: "Which clubs and chapters are involved in this event?",
+      answer: "The program is organized by the IEEE Computer Society SCT Student Branch Chapter, with active collaborations from IEEE CS SYP, IEEE CS Kerala, IEEE ComSoc Kerala, GEC Barton Hill SBC, CE Attingal SBC, and other regional chapters."
+    },
+    {
+      question: "Will I get certificates for participating?",
+      answer: "Yes, all active participants who complete the workshop tracks and submit sprint challenges will receive official participation certificates from the IEEE SCT Student Branch Chapter."
+    },
+    {
+      question: "What are the timings for the offline days (July 18 and 19)?",
+      answer: "The offline sessions run from 8:30 AM to 5:00 PM on both Saturday (July 18) and Sunday (July 19) at the SCTCE campus."
+    },
+    {
+      question: "Are there food and refreshments provided?",
+      answer: "Yes, working lunch, high-tea, and refreshments will be fully provided to all registered participants during the offline workshop days."
+    },
+    {
+      question: "Can I choose my track after registering?",
+      answer: "Yes, you will receive a track selection form upon registration confirmation to finalize your preference between IoT Building and LLM Building."
+    },
+    {
+      question: "Is there any cash prize for the speed trials and sprint challenges?",
+      answer: "Yes, the top performing teams in the track challenges on Day 7 will receive cash awards, winner certificates, and developer goodies from our sponsors."
     }
   ];
 
@@ -89,43 +119,28 @@ export default function Home() {
     }
   ];
 
-  // Toggle Mute & Sound
-  const handleToggleMute = () => {
-    const nextMuted = audioEngine.toggleMute();
-    setMuted(nextMuted);
-  };
 
-  // Heartbeat sound interval linked to section progression
+
+  // Lock body/html scroll until initial animation finishes
   useEffect(() => {
-    if (muted) return;
-
-    let speed = 2500;
-    let frequency = 50;
-
-    if (activeSection === "horizontal-sprint") {
-      speed = 1700;
-      frequency = 62;
-    } else if (activeSection === "timeline") {
-      speed = 1300;
-      frequency = 68;
-    } else if (activeSection === "stats" || activeSection === "faq") {
-      speed = 900;
-      frequency = 75;
+    if (!showContent) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
-
-    const timer = setInterval(() => {
-      audioEngine.playPulse(frequency, 0.4);
-      setPulseCount((prev) => prev + 1);
-    }, speed);
-
-    return () => clearInterval(timer);
-  }, [muted, activeSection]);
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [showContent]);
 
   // Main scroll animation driver (Vertical sections + Horizontal Panel pinning)
   useEffect(() => {
     if (!containerRef.current || !pulseRef.current || !horizontalRef.current || !panelsRef.current) return;
 
-    const sections = ["hero", "horizontal-sprint", "timeline", "stats", "faq", "join"];
+    const sections = ["hero", "horizontal-sprint", "timeline", "faq", "join"];
     
     sections.forEach((sec) => {
       ScrollTrigger.create({
@@ -134,16 +149,9 @@ export default function Home() {
         end: "bottom center",
         onEnter: () => {
           setActiveSection(sec);
-          const idx = sections.indexOf(sec);
-          audioEngine.updateAmbienceFrequency(idx);
-          if (sec === "stats") {
-            audioEngine.playSwell();
-          }
         },
         onEnterBack: () => {
           setActiveSection(sec);
-          const idx = sections.indexOf(sec);
-          audioEngine.updateAmbienceFrequency(idx);
         },
       });
     });
@@ -214,99 +222,106 @@ export default function Home() {
     };
   }, []);
 
+  const handleHeroComplete = useCallback(() => {
+    setShowContent(true);
+    // Let GSAP ScrollTrigger refresh after DOM completes transition layout shifts
+    setTimeout(() => ScrollTrigger.refresh(), 100);
+  }, []);
+
   return (
-    <main ref={containerRef} className="relative z-10 bg-primary-bg text-primary-text">
-      
-      {/* Studio PHA5E Custom Dual Cursor follower */}
-      <CustomCursor />
-
-      {/* Right-Side Scroll Depth Progress Indicator */}
-      <ScrollIndicator />
-
-      {/* Header Sticky Navigation */}
-      <Header muted={muted} onToggleMute={handleToggleMute} />
-
-      {/* Ambient Backdrop: The Pulse */}
-      <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center overflow-hidden">
-        <div
-          ref={pulseRef}
-          className="pulse-circle w-72 h-72 opacity-25 flex items-center justify-center"
-        >
-          {!muted && (
-            <>
-              <div key={`ring1-${pulseCount}`} className="pulse-ring" />
-              <div key={`ring2-${pulseCount}`} className="pulse-ring-delayed" />
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* HERO SECTION */}
-      <Hero />
-
-      {/* STUDIO PHA5E HORIZONTAL SPRINT SECTION */}
-      <div id="horizontal-sprint" ref={horizontalRef} className="h-screen overflow-hidden bg-black/40 relative">
+    <>
+      <main 
+        ref={containerRef} 
+        className={`relative z-10 bg-primary-bg text-primary-text ${showContent ? "visible-state" : ""}`}
+      >
         
-        {/* Horizontal Scroll Progress bar */}
-        <div className="absolute bottom-16 left-12 right-12 h-[1px] bg-white/10 z-20 hidden md:block">
-          <div 
-            className="h-full bg-accent transition-all duration-300 ease-out shadow-[0_0_8px_var(--accent-color)]" 
-            style={{ width: `${panelsProgress * 100}%` }} 
+        {/* Studio PHA5E Custom Dual Cursor follower */}
+        <CustomCursor />
+
+        {/* Right-Side Scroll Depth Progress Indicator */}
+        <ScrollIndicator />
+
+        {/* Header Sticky Navigation */}
+        <Header visible={showContent} />
+
+        {/* Ambient Backdrop: The Pulse */}
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000"
+          style={{ opacity: showContent ? 1 : 0 }}
+        >
+          <div
+            ref={pulseRef}
+            className="pulse-circle w-72 h-72 opacity-25 flex items-center justify-center"
           />
-          <div className="flex justify-between mt-3 text-[9px] uppercase tracking-[0.2em] text-white/30 font-mono">
-            <span>01 / About</span>
-            <span>02 / IoT Building</span>
-            <span>03 / LLM Building</span>
-            <span>04 / ADAS & Gene</span>
-            <span>05 / Placement</span>
+        </div>
+
+        {/* HERO SECTION */}
+        <Hero onComplete={handleHeroComplete} />
+
+        {/* STUDIO PHA5E HORIZONTAL SPRINT SECTION */}
+        <div id="horizontal-sprint" ref={horizontalRef} className="h-screen overflow-hidden bg-black/40 relative">
+          
+          {/* Horizontal Scroll Progress bar */}
+          <div className="absolute bottom-16 left-12 right-12 h-[1px] bg-white/10 z-20 hidden md:block">
+            <div 
+              className="h-full bg-accent transition-all duration-300 ease-out shadow-[0_0_8px_var(--accent-color)]" 
+              style={{ width: `${panelsProgress * 100}%` }} 
+            />
+            <div className="flex justify-between mt-3 text-[9px] uppercase tracking-[0.2em] text-white/30 font-mono">
+              <span>01 / About</span>
+              <span>02 / IoT Building</span>
+              <span>03 / LLM Building</span>
+              <span>04 / ADAS & Gene</span>
+              <span>05 / Placement</span>
+            </div>
+          </div>
+
+          <div ref={panelsRef} className="flex flex-row flex-nowrap w-[500vw] h-full">
+            <AboutPanel />
+            <TrackPanel 
+              index="02 / TRACK ONE"
+              category="IoT Building"
+              subtitle="HANDS-ON OFFLINE WORKSHOP"
+              desc="Master firmware deployment, sensor configurations, and embedded systems to construct physical prototypes."
+              imageSrc="/devops.png"
+            />
+            <TrackPanel 
+              index="03 / TRACK TWO"
+              category="LLM Building"
+              subtitle="HANDS-ON OFFLINE WORKSHOP"
+              desc="Build custom large language models, execute model fine-tuning, and design specialized agentic systems."
+              imageSrc="/roborace.png"
+            />
+            <TrackPanel 
+              index="04 / TRACK THREE"
+              category="ADAS & Genetech"
+              subtitle="INTERDISCIPLINARY TALK SESSIONS"
+              desc="Dive into Advanced Driver Assistance Systems (ADAS) and explore how computational biology scales through Gene Computing."
+              imageSrc="/community.png"
+            />
+            <TrackPanel 
+              index="05 / TRACK FOUR"
+              category="Placement & Mentor"
+              subtitle="CAREER LAUNCHPAD & PERSONALIZED GUIDANCE"
+              desc="Engage in interactive self-leadership, resume building, and get personalized mentoring directly from industry professionals."
+              imageSrc="/community.png"
+            />
           </div>
         </div>
 
-        <div ref={panelsRef} className="flex flex-row flex-nowrap w-[500vw] h-full">
-          <AboutPanel />
-          <TrackPanel 
-            index="02 / TRACK ONE"
-            category="IoT Building"
-            subtitle="HANDS-ON OFFLINE WORKSHOP"
-            desc="Master firmware deployment, sensor configurations, and embedded systems to construct physical prototypes."
-            imageSrc="/devops.png"
-          />
-          <TrackPanel 
-            index="03 / TRACK TWO"
-            category="LLM Building"
-            subtitle="HANDS-ON OFFLINE WORKSHOP"
-            desc="Build custom large language models, execute model fine-tuning, and design specialized agentic systems."
-            imageSrc="/roborace.png"
-          />
-          <TrackPanel 
-            index="04 / TRACK THREE"
-            category="ADAS & Genetech"
-            subtitle="INTERDISCIPLINARY TALK SESSIONS"
-            desc="Dive into Advanced Driver Assistance Systems (ADAS) and explore how computational biology scales through Gene Computing."
-            imageSrc="/community.png"
-          />
-          <TrackPanel 
-            index="05 / TRACK FOUR"
-            category="Placement & Mentor"
-            subtitle="CAREER LAUNCHPAD & PERSONALIZED GUIDANCE"
-            desc="Engage in interactive self-leadership, resume building, and get personalized mentoring directly from industry professionals."
-            imageSrc="/community.png"
-          />
-        </div>
-      </div>
+        {/* TIMELINE SECTION */}
+        <TimelineSection timelineData={timelineData} />
 
-      {/* TIMELINE SECTION */}
-      <TimelineSection timelineData={timelineData} />
+        {/* FAQ SECTION */}
+        <FAQSection faqData={faqData} />
 
-      {/* STATS SECTION */}
-      <StatsSection />
+        {/* JOIN CTA SECTION */}
+        <JoinSection />
 
-      {/* FAQ SECTION */}
-      <FAQSection faqData={faqData} />
+        {/* FOOTER */}
+        <Footer />
 
-      {/* JOIN CTA SECTION */}
-      <JoinSection />
-
-    </main>
+      </main>
+    </>
   );
 }

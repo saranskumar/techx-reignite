@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Mail } from "lucide-react";
 
 interface FAQItem {
   question: string;
@@ -20,32 +20,88 @@ export default function FAQSection({ faqData }: FAQSectionProps) {
   };
 
   return (
-    <section id="faq" className="min-h-screen relative flex flex-col justify-center px-6 py-24 bg-primary-bg/20">
-      <div className="max-w-3xl w-full mx-auto z-10">
-        <p className="text-xs uppercase tracking-[0.4em] text-white/40 mb-4 font-semibold">07 / Support</p>
-        <h2 className="text-4xl md:text-6xl font-display text-white mb-16 leading-none">Common Questions</h2>
+    <section id="faq" className="min-h-screen relative flex items-center justify-center px-6 py-28 bg-[#1B1B1A]/20 overflow-hidden">
+      {/* Background glow overlay */}
+      <div className="absolute bottom-1/4 right-0 w-[350px] h-[350px] rounded-full bg-[var(--accent-glow)] filter blur-[80px] pointer-events-none opacity-20" />
+
+      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-start z-10">
         
-        <div className="flex flex-col gap-4">
-          {faqData.map((item, idx) => (
-            <div
-              key={idx}
-              className="border-b border-white/10 pb-6 transition-all duration-300"
-            >
-              <button
-                onClick={() => toggleFaq(idx)}
-                className="w-full flex items-center justify-between text-left py-2 text-white hover:text-accent transition-all cursor-pointer"
-              >
-                <span className="text-lg md:text-xl font-medium tracking-wide">{item.question}</span>
-                <ChevronDown className={`w-5 h-5 faq-chevron ${openFaq === idx ? "open" : ""}`} />
-              </button>
-              <div className={`faq-answer ${openFaq === idx ? "open" : ""}`}>
-                <p className="text-sm md:text-base text-white/50 font-light leading-relaxed">
-                  {item.answer}
-                </p>
+        {/* Left Column - Sticky Section Details */}
+        <div className="lg:col-span-4 lg:sticky lg:top-28">
+          <p className="text-xs uppercase tracking-[0.4em] text-accent mb-4 font-mono font-bold">
+            07 / Support
+          </p>
+          <h2 className="text-4xl md:text-5xl font-display text-white mb-6 leading-none">
+            Common <br /> Questions
+          </h2>
+          <p className="text-sm text-white/50 leading-relaxed font-light max-w-sm mb-8">
+            Find answers to frequently asked questions about schedules, team configurations, venues, and registration criteria.
+          </p>
+
+          {/* Quick Support Card widget */}
+          <div className="bg-[#2A2A28]/25 border border-white/5 rounded-xl p-5 flex flex-col gap-4 max-w-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+                <Mail className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-[10px] uppercase tracking-wider text-white/40 block font-mono">Need Help?</span>
+                <a href="mailto:ieee@sctce.ac.in" className="text-xs text-white/80 hover:text-accent font-semibold transition-colors">
+                  ieee@sctce.ac.in
+                </a>
               </div>
             </div>
-          ))}
+            <div className="h-[1px] bg-white/5 w-full" />
+            <p className="text-[10px] text-white/30 font-light leading-relaxed">
+              Our support representatives are active 24/7 during the sprint to help clarify event logs, system failures, and ticket details.
+            </p>
+          </div>
         </div>
+
+        {/* Right Column - Accordions Grid */}
+        <div className="lg:col-span-8 flex flex-col gap-4 w-full">
+          {faqData.map((item, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <div
+                key={idx}
+                className={`border rounded-xl px-6 py-5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden
+                  ${isOpen 
+                    ? "bg-[#2A2A28]/35 border-accent/25 shadow-[0_8px_30px_rgba(0,0,0,0.3)]" 
+                    : "bg-[#2A2A28]/15 hover:bg-[#2A2A28]/35 border-white/5 hover:border-accent/15"
+                  }`}
+              >
+                {/* Active vertical accent border */}
+                <div className={`absolute left-0 top-0 bottom-0 w-[2px] bg-accent transition-transform duration-500 origin-top
+                  ${isOpen ? "scale-y-100" : "scale-y-0"}`} 
+                />
+
+                <button
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full flex items-center justify-between text-left py-1 text-white hover:text-accent transition-all cursor-pointer group"
+                >
+                  <span className="text-base md:text-lg font-medium tracking-wide leading-snug pr-8 group-hover:translate-x-1 transition-transform duration-300">
+                    {item.question}
+                  </span>
+                  <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] 
+                    ${isOpen ? "rotate-180 text-accent" : "text-white/40"}`} 
+                  />
+                </button>
+                
+                <div 
+                  className={`transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden
+                    ${isOpen ? "max-h-56 opacity-100 mt-4" : "max-h-0 opacity-0"}`}
+                >
+                  <div className="h-[1px] bg-white/5 w-full mb-4" />
+                  <p className="text-xs md:text-sm text-white/50 font-light leading-relaxed">
+                    {item.answer}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );

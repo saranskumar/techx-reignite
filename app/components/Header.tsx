@@ -1,114 +1,155 @@
 "use client";
 
-import { useState } from "react";
-import { Volume2, VolumeX } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface HeaderProps {
-  muted: boolean;
-  onToggleMute: () => void;
+  visible: boolean;
 }
 
-export default function Header({ muted, onToggleMute }: HeaderProps) {
+export default function Header({ visible }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
   const navLinks = [
     { name: "About", href: "#about" },
-    { name: "Tracks", href: "#horizontal-sprint" }, // Horizontal panel section has scroll-trigger
+    { name: "Tracks", href: "#horizontal-sprint" },
     { name: "Timeline", href: "#timeline" },
     { name: "FAQ", href: "#faq" }
   ];
 
   return (
-    <>
-      <header className="fixed top-0 left-0 w-full z-50 border-b border-primary-border bg-primary-bg/70 backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <header
+      className={`fixed left-1/2 -translate-x-1/2 z-50 border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+        ${scrolled 
+          ? "top-4 bg-[#212120]/95 border-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.5)] max-w-4xl h-14" 
+          : "top-6 bg-[#2A2A28]/60 border-white/5 shadow-lg max-w-5xl h-16"
+        }
+        ${menuOpen 
+          ? "w-[calc(100%-2rem)] rounded-[28px] px-6 pb-6 pt-3 h-[320px] max-w-none!" 
+          : "w-[calc(100%-2rem)] rounded-full px-6"
+        }
+        backdrop-blur-xl flex flex-col justify-start overflow-hidden`}
+      style={{
+        opacity: visible ? 1 : 0,
+        pointerEvents: visible ? "auto" : "none",
+        transition: "opacity 1000ms ease-out"
+      }}
+    >
+      {/* Top row - always visible */}
+      <div className="w-full flex items-center justify-between h-full flex-shrink-0">
+        <a
+          href="#hero"
+          onClick={closeMenu}
+          className="font-display font-extrabold text-sm md:text-base tracking-[0.2em] hover:tracking-[0.3em] text-white hover:text-accent transition-all duration-500 z-50 flex items-center gap-0.5"
+        >
+          TECHX<span className="text-accent text-[8px] animate-pulse leading-none -translate-y-1">.</span>
+        </a>
+        
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="nav-link text-[11px] uppercase tracking-widest text-white/60 hover:text-white transition-all py-1"
+            >
+              {link.name}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-4 z-50">
+          {/* Desktop Register Button with barcode decoration */}
           <a
-            href="#hero"
-            onClick={closeMenu}
-            className="font-display font-extrabold text-lg tracking-[0.2em] text-white hover:text-accent transition-all z-50"
+            href="#join"
+            className="group hidden md:inline-flex items-center gap-2 px-5 py-2 text-[10px] uppercase tracking-[0.2em] font-bold border border-white/15 text-white/80 rounded-md hover:border-accent hover:text-accent transition-all duration-300 bg-white/5 hover:bg-white/10 relative overflow-hidden"
           >
-            TECHX
+            <span className="flex gap-[1px] h-3 items-center opacity-30 group-hover:opacity-75 transition-opacity duration-300 mr-1">
+              <span className="w-[1px] h-full bg-current" />
+              <span className="w-[2px] h-full bg-current" />
+              <span className="w-[1px] h-full bg-current" />
+              <span className="w-[1px] h-full bg-current" />
+            </span>
+            <span>Register</span>
+            <svg 
+              className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1 text-accent" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
           </a>
-          
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="nav-link text-xs uppercase tracking-widest text-white/60 hover:text-white transition-all py-1"
-              >
-                {link.name}
-              </a>
-            ))}
-          </nav>
 
-          <div className="flex items-center gap-4 z-50">
-            {/* Audio Toggle */}
-            <button
-              onClick={onToggleMute}
-              className="flex items-center justify-center p-2 rounded-full border border-white/10 text-white/70 hover:text-white transition-all cursor-pointer"
-              title="Toggle audio drone"
-              data-no-chime
-            >
-              {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 animate-pulse text-accent" />}
-            </button>
-            
-            {/* Desktop Register Button */}
-            <a
-              href="#join"
-              className="hidden md:inline-block px-6 py-2.5 text-[10px] uppercase tracking-[0.2em] font-semibold border border-white/15 bg-white/5 rounded-full hover:border-accent hover:bg-white/10 transition-all"
-            >
-              Register
-            </a>
-
-            {/* Mobile Hamburger Button */}
-            <button
-              onClick={toggleMenu}
-              className="flex flex-col items-center justify-center w-8 h-8 md:hidden relative cursor-pointer"
-              aria-label="Toggle Menu"
-            >
-              <span className={`w-5 h-[1.5px] bg-white hamburger-line ${menuOpen ? "rotate-45 translate-y-[3.5px]" : ""}`} />
-              <span className={`w-5 h-[1.5px] bg-white hamburger-line mt-1.5 ${menuOpen ? "scale-x-0" : ""}`} />
-              <span className={`w-5 h-[1.5px] bg-white hamburger-line mt-1.5 ${menuOpen ? "-rotate-45 -translate-y-[2.5px]" : ""}`} />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Expanding Circular Menu */}
-      <div className={`cover-menu md:hidden ${menuOpen ? "active" : ""}`}>
-        <div className="cover-background" />
-        <div className="cover-content">
-          <div className="flex flex-col gap-8 items-start justify-center h-full">
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent font-bold">Menu Navigation</span>
-            {navLinks.map((link, idx) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={closeMenu}
-                className="text-4xl font-display text-white hover:text-accent transition-all"
-                style={{ 
-                  animationDelay: `${idx * 0.1}s`,
-                }}
-              >
-                <span className="text-xs text-white/30 mr-4 font-mono font-normal">0{idx + 1}</span>
-                {link.name}
-              </a>
-            ))}
-            <a
-              href="#join"
-              onClick={closeMenu}
-              className="mt-8 px-10 py-4 text-xs uppercase tracking-[0.2em] font-semibold bg-accent text-black rounded-full"
-            >
-              Register Now
-            </a>
-          </div>
+          {/* Mobile Hamburger Button */}
+          <button
+            onClick={toggleMenu}
+            className="flex flex-col items-center justify-center w-8 h-8 md:hidden relative cursor-pointer"
+            aria-label="Toggle Menu"
+          >
+            <span className={`w-5 h-[1.5px] bg-white hamburger-line transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[4.5px]" : ""}`} />
+            <span className={`w-5 h-[1.5px] bg-white hamburger-line mt-1.5 transition-all duration-300 ${menuOpen ? "scale-x-0" : ""}`} />
+            <span className={`w-5 h-[1.5px] bg-white hamburger-line mt-1.5 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[4.5px]" : ""}`} />
+          </button>
         </div>
       </div>
-    </>
+
+      {/* Mobile Drawer Navigation links */}
+      <div 
+        className={`w-full flex flex-col items-stretch transition-all duration-500 delay-75 md:hidden
+          ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"}`}
+      >
+        <div className="h-[1px] bg-white/5 w-full my-2" />
+        <nav className="flex flex-col gap-3 py-1">
+          {navLinks.map((link, idx) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={closeMenu}
+              style={{
+                transitionDelay: menuOpen ? `${idx * 60 + 100}ms` : "0ms",
+                transform: menuOpen ? "translateY(0)" : "translateY(15px)",
+                opacity: menuOpen ? 1 : 0,
+              }}
+              className="transition-all duration-500 text-2xl font-display text-white hover:text-accent flex items-center justify-between py-1 border-b border-white/5 last:border-0"
+            >
+              <span>{link.name}</span>
+              <span className="text-[10px] text-white/30 font-mono font-normal">0{idx + 1}</span>
+            </a>
+          ))}
+        </nav>
+        <a
+          href="#join"
+          onClick={closeMenu}
+          style={{
+            transitionDelay: menuOpen ? `${navLinks.length * 60 + 100}ms` : "0ms",
+            transform: menuOpen ? "translateY(0)" : "translateY(15px)",
+            opacity: menuOpen ? 1 : 0,
+          }}
+          className="group mt-4 w-full py-3 text-xs uppercase tracking-[0.2em] font-semibold bg-accent text-[#0B0B0B] border border-accent rounded-full hover:bg-transparent hover:text-accent transition-all duration-500 text-center flex items-center justify-center gap-1.5"
+        >
+          <span>Register Now</span>
+          <svg 
+            className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+    </header>
   );
 }
