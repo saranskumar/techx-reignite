@@ -39,7 +39,9 @@ export default function ScrollIndicator() {
           className="w-12 h-[1px] bg-white/20 origin-left transition-transform duration-75" 
           style={{ transform: `scaleX(${1 + progress * 0.5})` }} 
         />
-        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/40">SCROLL</span>
+        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/40 flex items-center gap-2">
+          SCROLL <span className="text-accent font-bold">({Math.round(progress * 100)}%)</span>
+        </span>
       </div>
     </>
   );

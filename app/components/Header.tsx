@@ -70,26 +70,29 @@ export default function Header({ visible }: HeaderProps) {
         </nav>
 
         <div className="flex items-center gap-4 z-50">
-          {/* Desktop Register Button with barcode decoration */}
+          {/* Desktop Register Button with barcode decoration & slide hover */}
           <a
             href="#join"
-            className="group hidden md:inline-flex items-center gap-2 px-5 py-2 text-[10px] uppercase tracking-[0.2em] font-bold border border-white/15 text-white/80 rounded-md hover:border-accent hover:text-accent transition-all duration-300 bg-white/5 hover:bg-white/10 relative overflow-hidden"
+            className="group hidden md:inline-flex items-center gap-2 px-5 py-2 text-[10px] uppercase tracking-[0.2em] font-bold border border-white/15 text-white/80 rounded-md hover:border-accent hover:text-[#0B0B0B] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white/5 relative overflow-hidden"
           >
-            <span className="flex gap-[1px] h-3 items-center opacity-30 group-hover:opacity-75 transition-opacity duration-300 mr-1">
-              <span className="w-[1px] h-full bg-current" />
-              <span className="w-[2px] h-full bg-current" />
-              <span className="w-[1px] h-full bg-current" />
-              <span className="w-[1px] h-full bg-current" />
+            <span className="absolute inset-0 bg-accent scale-x-0 origin-right transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 group-hover:origin-left z-0" />
+            <span className="relative z-10 flex items-center">
+              <span className="flex gap-[1px] h-3 items-center opacity-30 group-hover:opacity-75 transition-opacity duration-300 mr-2">
+                <span className="w-[1px] h-full bg-current" />
+                <span className="w-[2px] h-full bg-current" />
+                <span className="w-[1px] h-full bg-current" />
+                <span className="w-[1px] h-full bg-current" />
+              </span>
+              <span className="mr-1">Register</span>
+              <svg 
+                className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1 text-accent group-hover:text-[#0B0B0B]" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </span>
-            <span>Register</span>
-            <svg 
-              className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1 text-accent" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
           </a>
 
           {/* Mobile Hamburger Button */}

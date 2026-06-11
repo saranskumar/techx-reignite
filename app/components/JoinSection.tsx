@@ -109,17 +109,20 @@ export default function JoinSection() {
           onClick={() => {
             alert("Registration system initiated. Welcome to TechX Reignite.");
           }}
-          className="group px-12 py-5 text-xs uppercase tracking-[0.3em] font-semibold bg-accent text-[#0B0B0B] border border-accent rounded-full hover:bg-transparent hover:text-accent transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 mx-auto shadow-[0_0_20px_rgba(191,199,207,0.15)] hover:shadow-none"
+          className="group px-12 py-5 text-xs uppercase tracking-[0.3em] font-semibold bg-accent text-[#0B0B0B] border border-accent hover:border-white/20 rounded-full hover:text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex items-center justify-center gap-2 mx-auto relative overflow-hidden shadow-[0_0_20px_rgba(191,199,207,0.15)] hover:shadow-none"
         >
-          <span>Claim Your Spot</span>
-          <svg 
-            className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
+          <span className="absolute inset-0 bg-[#0B0B0B] scale-x-0 origin-right transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 group-hover:origin-left z-0" />
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            <span>Claim Your Spot</span>
+            <svg 
+              className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1 text-[#0B0B0B] group-hover:text-accent" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
         </button>
       </div>
     </section>

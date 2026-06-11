@@ -214,33 +214,42 @@ export default function Hero({ onComplete }: HeroProps) {
         </p>
 
         <div className="reveal-item delay-4 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+          {/* Primary CTA: Join the Sprint */}
           <a
             href="#join"
-            className="group w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold bg-accent text-[#0B0B0B] border border-accent rounded-full hover:bg-transparent hover:text-accent transition-all duration-300 cursor-pointer text-center flex items-center justify-center gap-2"
+            className="group w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold bg-accent text-[#0B0B0B] border border-accent hover:border-white/20 rounded-full hover:text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden text-center flex items-center justify-center gap-2"
           >
-            <span>Join the Sprint</span>
-            <svg 
-              className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
+            <span className="absolute inset-0 bg-[#0B0B0B] scale-x-0 origin-right transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 group-hover:origin-left z-0" />
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              <span>Join the Sprint</span>
+              <svg 
+                className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1 text-[#0B0B0B] group-hover:text-accent" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </span>
           </a>
+
+          {/* Secondary CTA: Explore Vision */}
           <a
             href="#about"
-            className="group w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold border border-white/20 hover:border-accent hover:text-accent rounded-full transition-all duration-300 cursor-pointer text-center flex items-center justify-center gap-2"
+            className="group w-full sm:w-auto px-10 py-4 text-xs uppercase tracking-[0.3em] font-semibold border border-white/20 text-white/80 rounded-full hover:text-[#0B0B0B] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden text-center flex items-center justify-center gap-2 bg-white/5"
           >
-            <span>Explore Vision</span>
-            <svg 
-              className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-y-1" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
+            <span className="absolute inset-0 bg-accent scale-x-0 origin-right transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 group-hover:origin-left z-0" />
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              <span>Explore Vision</span>
+              <svg 
+                className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-y-1 text-white group-hover:text-[#0B0B0B]" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </span>
           </a>
         </div>
       </div>

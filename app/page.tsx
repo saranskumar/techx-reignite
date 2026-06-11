@@ -267,12 +267,12 @@ export default function Home() {
               className="h-full bg-accent transition-all duration-300 ease-out shadow-[0_0_8px_var(--accent-color)]" 
               style={{ width: `${panelsProgress * 100}%` }} 
             />
-            <div className="flex justify-between mt-3 text-[9px] uppercase tracking-[0.2em] text-white/30 font-mono">
-              <span>01 / About</span>
-              <span>02 / IoT Building</span>
-              <span>03 / LLM Building</span>
-              <span>04 / ADAS & Gene</span>
-              <span>05 / Placement</span>
+            <div className="flex justify-between mt-3 text-[9px] uppercase tracking-[0.2em] font-mono select-none">
+              <span className={`transition-colors duration-300 ${panelsProgress < 0.125 ? "text-white font-semibold" : "text-white/30"}`}>01 / About</span>
+              <span className={`transition-colors duration-300 ${(panelsProgress >= 0.125 && panelsProgress < 0.375) ? "text-white font-semibold" : "text-white/30"}`}>02 / IoT Building</span>
+              <span className={`transition-colors duration-300 ${(panelsProgress >= 0.375 && panelsProgress < 0.625) ? "text-white font-semibold" : "text-white/30"}`}>03 / LLM Building</span>
+              <span className={`transition-colors duration-300 ${(panelsProgress >= 0.625 && panelsProgress < 0.875) ? "text-white font-semibold" : "text-white/30"}`}>04 / ADAS & Gene</span>
+              <span className={`transition-colors duration-300 ${panelsProgress >= 0.875 ? "text-white font-semibold" : "text-white/30"}`}>05 / Placement</span>
             </div>
           </div>
 
