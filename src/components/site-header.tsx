@@ -14,14 +14,22 @@ const links = [
 ];
 
 export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
+  const [overHero, setOverHero] = useState(true);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const hero = document.getElementById("top");
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setOverHero(entry.isIntersecting && entry.intersectionRatio > 0.28);
+      },
+      { threshold: [0, 0.28, 0.6, 1] }
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -31,13 +39,15 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  const inverted = overHero && !open;
+
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
-        scrolled || open
-          ? "bg-cream/90 text-brown backdrop-blur-md"
-          : "bg-transparent text-cream"
+        inverted
+          ? "bg-transparent text-cream"
+          : "bg-cream/90 text-brown backdrop-blur-md"
       )}
     >
       <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 py-4 md:px-10">
@@ -46,12 +56,7 @@ export function SiteHeader() {
           className="font-display flex items-baseline gap-2 tracking-[0.28em] uppercase"
         >
           <span className="text-[11px] font-semibold">TechX</span>
-          <span
-            className={cn(
-              "text-[11px] font-medium",
-              scrolled || open ? "text-amber" : "text-amber"
-            )}
-          >
+          <span className="text-[11px] font-medium text-amber">
             Reignite
           </span>
         </a>
@@ -73,7 +78,7 @@ export function SiteHeader() {
           size="icon"
           className={cn(
             "md:hidden rounded-none hover:bg-transparent",
-            scrolled || open ? "text-brown" : "text-cream"
+            inverted ? "text-cream" : "text-brown"
           )}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}

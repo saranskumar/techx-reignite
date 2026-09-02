@@ -4,7 +4,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] items-end overflow-hidden bg-brown"
+      className="relative flex min-h-[100svh] scroll-mt-0 items-end overflow-hidden bg-brown"
     >
       <Image
         src="/art/hero-neural.png"

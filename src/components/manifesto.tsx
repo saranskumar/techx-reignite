@@ -4,7 +4,7 @@ export function Manifesto() {
   return (
     <section
       id="manifesto"
-      className="relative overflow-hidden bg-cream text-brown"
+      className="relative scroll-mt-20 overflow-hidden bg-cream text-brown"
     >
       <div className="mx-auto grid max-w-[1440px] items-end gap-12 px-5 py-24 md:grid-cols-12 md:gap-10 md:px-10 md:py-36">
         <div className="md:col-span-5">

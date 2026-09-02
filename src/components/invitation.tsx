@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -22,13 +21,19 @@ export function Invitation() {
     event.preventDefault();
     setMessage(null);
 
-    if (name.trim().length < 2) {
+    const data = new FormData(event.currentTarget);
+    const nextName = String(data.get("name") ?? name).trim();
+    const nextEmail = String(data.get("email") ?? email).trim();
+    setName(nextName);
+    setEmail(nextEmail);
+
+    if (nextName.length < 2) {
       setStatus("error");
       setMessage("A name needs at least two letters.");
       return;
     }
 
-    if (!isValidEmail(email.trim())) {
+    if (!isValidEmail(nextEmail)) {
       setStatus("error");
       setMessage("That does not read as an email address.");
       return;
@@ -40,7 +45,7 @@ export function Invitation() {
   }
 
   return (
-    <section id="invitation" className="relative overflow-hidden bg-brown text-cream">
+    <section id="invitation" className="relative scroll-mt-20 overflow-hidden bg-brown text-cream">
       <div
         className="pointer-events-none absolute -right-24 -top-32 size-[28rem] rounded-full bg-amber/25 blur-3xl"
         aria-hidden="true"
@@ -83,7 +88,7 @@ export function Invitation() {
                 >
                   Name
                 </Label>
-                <Input
+                <input
                   id="name"
                   name="name"
                   autoComplete="name"
@@ -94,7 +99,7 @@ export function Invitation() {
                   }}
                   placeholder="The name we should write back to"
                   aria-invalid={status === "error" && name.trim().length < 2}
-                  className="h-12 rounded-none border-0 border-b border-amber/40 bg-transparent px-0 text-lg text-cream placeholder:text-cream/30 focus-visible:border-amber focus-visible:ring-0"
+                  className="h-12 w-full rounded-none border-0 border-b border-amber/40 bg-transparent px-0 text-lg text-cream outline-none placeholder:text-cream/30 focus-visible:border-amber"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -104,7 +109,7 @@ export function Invitation() {
                 >
                   Email
                 </Label>
-                <Input
+                <input
                   id="email"
                   name="email"
                   type="email"
@@ -118,7 +123,7 @@ export function Invitation() {
                   aria-invalid={
                     status === "error" && !isValidEmail(email.trim())
                   }
-                  className="h-12 rounded-none border-0 border-b border-amber/40 bg-transparent px-0 text-lg text-cream placeholder:text-cream/30 focus-visible:border-amber focus-visible:ring-0"
+                  className="h-12 w-full rounded-none border-0 border-b border-amber/40 bg-transparent px-0 text-lg text-cream outline-none placeholder:text-cream/30 focus-visible:border-amber"
                 />
               </div>
 
@@ -129,6 +134,7 @@ export function Invitation() {
               ) : null}
 
               <Button
+                nativeButton
                 type="submit"
                 disabled={status === "submitting"}
                 className="font-display h-14 rounded-none bg-amber px-8 text-[12px] tracking-[0.32em] text-cream uppercase hover:bg-amber/90"

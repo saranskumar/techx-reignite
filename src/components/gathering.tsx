@@ -9,7 +9,7 @@ const facts = [
 
 export function Gathering() {
   return (
-    <section id="gathering" className="bg-cream text-brown">
+    <section id="gathering" className="scroll-mt-20 bg-cream text-brown">
       <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-24 md:grid-cols-12 md:gap-8 md:px-10 md:py-36">
         <div className="md:col-span-5">
           <p className="font-display text-[11px] tracking-[0.42em] text-amber uppercase">
