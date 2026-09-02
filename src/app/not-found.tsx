@@ -10,7 +10,7 @@ export default function NotFound() {
         Lost in the haze.
       </h1>
       <p className="font-editorial mt-6 max-w-md text-2xl italic text-cream/75">
-        This path is not on the atlas.
+        This path is not on the programme.
       </p>
       <Link
         href="/"

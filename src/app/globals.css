@@ -137,6 +137,7 @@
   html {
     scroll-behavior: smooth;
     background: var(--cream);
+    overflow-x: hidden;
   }
 
   body {
@@ -149,6 +150,10 @@
   ::selection {
     background: var(--amber);
     color: var(--cream);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
   }
 }
 

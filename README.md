@@ -1,14 +1,11 @@
-# TechX REIGNITE
+# TechX REIGNITE 2026
 
-A single-page editorial site for **TechX REIGNITE**, drawn entirely in **Amber Futurism** — warm retro-futurist editorial art.
+Event website for **TechX REIGNITE**, the flagship technical upskilling programme of IEEE CS SCT Student Branch Chapter.
 
-The future here is not cyberpunk. It is monumental architecture, Japanese-inspired landscape composition, cinematic haze, and a strict monochromatic world:
+- **13–19 September 2026** — online pre-events
+- **26–27 September 2026** — flagship summit at Sree Chitra Thirunal College of Engineering (SCTCE), Trivandrum
 
-- **Amber energy** `#CF8326`
-- **Atmospheric light** `#FFFCF1`
-- **Depth** dark brown `#1C100A`
-
-Every image on the site is architectural concept art generated from the same direction: retro-futurism, editorial composition, atmospheric haze, Japanese-inspired minimal framing, and fine grain.
+Visual direction stays **Amber Futurism**: warm amber `#CF8326`, cream `#FFFCF1`, dark brown depth.
 
 ## Run locally
 
@@ -21,8 +18,6 @@ Open [http://127.0.0.1:43127](http://127.0.0.1:43127).
 
 ## Stack
 
-- Next.js (App Router) and TypeScript
-- Tailwind CSS
-- shadcn/ui for Button, Input, and Label
+Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui.
 
-The invitation form is local-only: it validates on the client and shows a success state. There is no backend or mailing list wired up.
+Registration is client-side only. Delegates still pay via UPI (`ieeesctsb@oksbi`) and email `ieeesctsb@gmail.com`.

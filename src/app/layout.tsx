@@ -32,18 +32,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "TechX REIGNITE — Amber Futurism",
+    default: "TechX REIGNITE 2026 — IEEE CS SCT SBC",
     template: "%s — TechX REIGNITE",
   },
   description:
-    "TechX REIGNITE is a gathering drawn in Amber Futurism: warm retro-futurist editorial art, architectural concept landscapes, and a single monochromatic world.",
+    "TechX REIGNITE is a technical upskilling summit by IEEE CS SCT SBC. 13–27 September 2026 at SCT College of Engineering, Trivandrum.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "TechX REIGNITE — Amber Futurism",
+    title: "TechX REIGNITE 2026 — IEEE CS SCT SBC",
     description:
-      "Warm retro-futurist editorial art for a century that is just beginning.",
+      "Powering minds, one spark at a time. Pre-events 13–19 September. Flagship summit 26–27 September at SCTCE, Trivandrum.",
     images: ["/art/hero-neural.png"],
   },
 };
@@ -54,12 +54,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${syne.variable} ${cormorant.variable} ${notoJp.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-cream text-brown">
+      <body className="min-h-full overflow-x-hidden bg-cream text-brown">
         <a
-          href="#manifesto"
+          href="#about"
           className="font-display bg-amber text-cream sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[90] focus:px-4 focus:py-2 focus:text-[11px] focus:tracking-[0.2em] focus:uppercase"
         >
-          Skip to manifesto
+          Skip to about
         </a>
         <Grain />
         <SiteHeader />

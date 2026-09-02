@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { event } from "@/lib/event";
+
 export function Hero() {
   return (
     <section
@@ -13,40 +15,53 @@ export function Hero() {
         priority
         sizes="100vw"
         quality={90}
-        className="object-cover object-center"
+        className="object-cover object-[62%_40%] sm:object-center"
       />
       <div className="haze absolute inset-0" />
-      <div className="absolute inset-0 bg-linear-to-t from-brown/80 via-brown/10 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-brown via-brown/35 to-transparent" />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-5 pb-16 pt-32 md:px-10 md:pb-20">
-        <p className="font-display mb-6 text-[11px] tracking-[0.42em] text-cream/80 uppercase">
-          Amber Futurism · Vol. 01
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 pb-10 pt-28 sm:px-6 sm:pb-14 md:px-10 md:pb-20">
+        <p className="font-display text-[10px] tracking-[0.32em] text-cream/80 uppercase sm:text-[11px] sm:tracking-[0.42em]">
+          {event.organizedBy} · {event.year}.09
         </p>
-        <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
-          <h1 className="font-display text-[18vw] leading-[0.8] font-extrabold tracking-[-0.04em] text-cream md:text-[11vw]">
+        <div className="mt-5 flex min-w-0 flex-col items-start gap-1 sm:flex-row sm:flex-wrap sm:items-end sm:gap-x-4">
+          <h1 className="font-display max-w-full text-[clamp(2.55rem,12vw,10.5rem)] leading-[0.86] font-extrabold tracking-[-0.05em] text-cream">
             REIGNITE
           </h1>
-          <span className="font-jp mb-2 text-xl text-amber md:mb-4 md:text-3xl">
+          <span className="font-jp text-lg text-amber sm:mb-3 sm:text-3xl">
             再燃
           </span>
         </div>
-        <div className="mt-8 flex max-w-xl flex-col gap-6 md:mt-10 md:flex-row md:items-end md:justify-between md:max-w-none">
-          <p className="font-editorial max-w-md text-2xl leading-snug text-cream/90 italic md:text-3xl">
-            The future does not have to be cold.
+        <p className="font-editorial mt-6 max-w-xl text-[1.45rem] leading-snug text-cream/95 italic sm:mt-8 sm:text-3xl md:text-4xl">
+          {event.tagline}
+        </p>
+        <div className="mt-8 flex max-w-2xl flex-col gap-2 text-cream/80 sm:mt-10">
+          <p className="font-display text-[11px] tracking-[0.16em] uppercase sm:text-xs sm:tracking-[0.2em]">
+            {event.dateShort}
           </p>
-          <p className="font-display max-w-sm text-[11px] leading-relaxed tracking-[0.18em] text-cream/70 uppercase">
-            Warm retro-futurist editorial art
-            <br />
-            TechX · 12–14 October 2027
+          <p className="max-w-lg text-base leading-7 sm:text-lg">
+            {event.locationShort} · Trivandrum
+            <span className="mt-1 block text-cream/65">
+              A global technical upskilling initiative bridging academic
+              learning and industry readiness.
+            </span>
           </p>
         </div>
-        <a
-          href="#manifesto"
-          className="font-display mt-14 inline-flex items-center gap-3 text-[11px] tracking-[0.32em] text-cream/80 uppercase transition-colors hover:text-amber"
-        >
-          <span className="block h-px w-10 bg-amber" />
-          Enter the world
-        </a>
+        <div className="mt-10 flex flex-col gap-3 sm:mt-12 sm:flex-row sm:items-center">
+          <a
+            href="#register"
+            className="font-display inline-flex h-12 items-center justify-center bg-amber px-6 text-[11px] tracking-[0.28em] text-cream uppercase"
+          >
+            Register now
+          </a>
+          <a
+            href="#about"
+            className="font-display inline-flex h-12 items-center justify-center gap-3 px-2 text-[11px] tracking-[0.28em] text-cream/80 uppercase transition-colors hover:text-amber"
+          >
+            <span className="hidden h-px w-10 bg-amber sm:block" />
+            Explore TechX
+          </a>
+        </div>
       </div>
     </section>
   );
