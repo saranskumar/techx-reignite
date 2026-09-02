@@ -149,13 +149,17 @@
   html {
     scroll-behavior: smooth;
     background: var(--cream);
-    overflow-x: hidden;
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
     background: var(--cream);
     color: var(--brown);
     font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    overflow-x: clip;
+    touch-action: manipulation;
   }
 
   ::selection {
@@ -199,9 +203,50 @@
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
   }
 
-  .card-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgb(28 23 19 / 12%);
+  @media (hover: hover) and (pointer: fine) {
+    .card-lift:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgb(28 23 19 / 12%);
+    }
+  }
+
+  .page-pad {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .kicker {
+    letter-spacing: 0.18em;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .page-pad {
+      padding-left: max(1.5rem, env(safe-area-inset-left));
+      padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+
+    .kicker {
+      letter-spacing: 0.42em;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .page-pad {
+      padding-left: max(2.5rem, env(safe-area-inset-left));
+      padding-right: max(2.5rem, env(safe-area-inset-right));
+    }
   }
 }
 

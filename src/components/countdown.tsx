@@ -27,7 +27,7 @@ export function Countdown() {
 
   if (now === null) {
     return (
-      <p className="font-display text-[11px] tracking-[0.28em] text-cream/70 uppercase">
+      <p className="font-display mt-8 text-[11px] tracking-[0.22em] text-cream/70 uppercase sm:mt-10">
         Pre-events open 13 September
       </p>
     );
@@ -36,7 +36,7 @@ export function Countdown() {
   const remain = START - now;
   if (remain <= 0) {
     return (
-      <p className="font-display text-[11px] tracking-[0.28em] text-amber uppercase">
+      <p className="font-display mt-8 text-[11px] tracking-[0.22em] text-amber uppercase sm:mt-10">
         The circuit is live
       </p>
     );
@@ -45,7 +45,10 @@ export function Countdown() {
   const time = parts(remain);
 
   return (
-    <div className="flex flex-wrap gap-3" aria-label="Countdown to pre-events">
+    <div
+      className="mt-8 grid w-full max-w-md grid-cols-4 gap-1.5 sm:mt-10 sm:gap-3"
+      aria-label="Countdown to pre-events"
+    >
       {(
         [
           ["Days", time.days],
@@ -56,12 +59,12 @@ export function Countdown() {
       ).map(([label, value]) => (
         <div
           key={label}
-          className="min-w-[3.6rem] border border-cream/25 bg-ink/35 px-3 py-2 backdrop-blur-sm"
+          className="min-w-0 border border-cream/25 bg-ink/35 px-1.5 py-2 text-center backdrop-blur-sm sm:px-3"
         >
-          <p className="font-display text-xl font-semibold tracking-tight text-cream sm:text-2xl">
+          <p className="font-display text-lg font-semibold tracking-tight text-cream tabular-nums sm:text-2xl">
             {String(value).padStart(2, "0")}
           </p>
-          <p className="font-display text-[9px] tracking-[0.2em] text-cream/55 uppercase">
+          <p className="font-display text-[8px] tracking-[0.16em] text-cream/55 uppercase sm:text-[9px] sm:tracking-[0.2em]">
             {label}
           </p>
         </div>

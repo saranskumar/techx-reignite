@@ -99,14 +99,14 @@ export function Register() {
   return (
     <section
       id="register"
-      className="relative scroll-mt-20 overflow-hidden bg-brown text-cream"
+      className="relative scroll-mt-24 overflow-hidden bg-brown text-cream"
     >
-      <div className="mx-auto grid max-w-[1440px] gap-12 px-4 py-16 sm:px-6 sm:py-20 md:grid-cols-12 md:px-10 md:py-28">
-        <div className="md:col-span-5">
-          <p className="font-display text-[11px] tracking-[0.42em] text-amber uppercase">
+      <div className="page-pad grid min-w-0 gap-10 py-14 sm:gap-12 sm:py-20 md:grid-cols-12 md:py-28">
+        <div className="min-w-0 md:col-span-5">
+          <p className="font-display kicker text-[11px] text-amber uppercase">
             Registration
           </p>
-          <h2 className="font-display mt-4 text-[clamp(1.85rem,5vw,3.75rem)] leading-[1.05] font-semibold tracking-tight">
+          <h2 className="font-display mt-4 text-[clamp(1.7rem,7vw,3.75rem)] leading-[1.08] font-semibold tracking-tight">
             Claim a delegate pass.
           </h2>
           <p className="mt-6 max-w-md text-base leading-8 text-cream/75">
@@ -114,7 +114,7 @@ export function Register() {
             <CopyValue value={event.upi} /> and write to{" "}
             <a
               href={`mailto:${event.email}`}
-              className="text-amber underline-offset-4 hover:underline"
+              className="break-all text-amber underline-offset-4 hover:underline"
             >
               {event.email}
             </a>{" "}
@@ -128,7 +128,7 @@ export function Register() {
           ) : null}
         </div>
 
-        <div className="md:col-span-6 md:col-start-7">
+        <div className="min-w-0 md:col-span-6 md:col-start-7">
           {status === "success" ? (
             <div role="status" className="border border-amber/40 px-6 py-10 sm:px-8">
               <h3 className="font-display text-2xl font-semibold">
@@ -228,7 +228,7 @@ export function Register() {
                 {tickets.map((item) => (
                   <label
                     key={item.id}
-                    className="flex cursor-pointer items-center gap-3 text-sm sm:text-base"
+                    className="flex min-h-11 cursor-pointer items-center gap-3 text-sm sm:text-base"
                   >
                     <input
                       type="radio"
@@ -277,7 +277,7 @@ export function Register() {
                 nativeButton
                 type="submit"
                 disabled={status === "submitting"}
-            className="btn-amber font-display h-12 rounded-none px-6 text-[11px] tracking-[0.28em] uppercase sm:h-14"
+            className="btn-amber font-display h-12 w-full rounded-none px-6 text-[11px] tracking-[0.22em] uppercase sm:h-14 sm:w-auto sm:tracking-[0.28em]"
               >
                 {status === "submitting" ? "Holding…" : "Submit registration"}
               </Button>

@@ -72,11 +72,13 @@ export function SiteHeader() {
           ? "bg-transparent text-cream"
           : "bg-cream/92 text-brown backdrop-blur-md"
       )}
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-3 sm:px-6 md:px-10 md:py-4">
+      <div className="page-pad flex min-h-14 items-center justify-between gap-2 py-2 md:min-h-16 md:py-3">
         <a
           href="#top"
-          className="font-display flex shrink-0 items-baseline gap-2 tracking-[0.18em] whitespace-nowrap uppercase sm:tracking-[0.22em]"
+          onClick={() => setOpen(false)}
+          className="font-display flex min-w-0 shrink items-baseline gap-1.5 tracking-[0.14em] uppercase sm:gap-2 sm:tracking-[0.22em]"
         >
           <span className="text-[11px] font-semibold">TechX</span>
           <span className="text-[11px] font-medium text-amber">Reignite</span>
@@ -99,11 +101,12 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <a
             href="#register"
+            onClick={() => setOpen(false)}
             className={cn(
-              "font-display hidden h-9 items-center px-4 text-[10px] tracking-[0.22em] uppercase sm:inline-flex",
+              "font-display inline-flex h-9 items-center px-3 text-[9px] tracking-[0.18em] uppercase sm:h-9 sm:px-4 sm:text-[10px] sm:tracking-[0.22em]",
               inverted
                 ? "btn-amber"
                 : "bg-brown text-cream hover:bg-amber-hover"
@@ -115,7 +118,7 @@ export function SiteHeader() {
             variant="ghost"
             size="icon"
             className={cn(
-              "rounded-none hover:bg-transparent lg:hidden",
+              "size-11 rounded-none hover:bg-transparent lg:hidden",
               inverted ? "text-cream" : "text-brown"
             )}
             aria-expanded={open}
@@ -128,14 +131,22 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <div className="max-h-[min(80svh,32rem)] overflow-y-auto border-t border-amber/30 bg-cream text-brown lg:hidden">
-          <nav className="flex flex-col px-4 py-4 sm:px-6">
+        <div className="fixed inset-x-0 bottom-0 z-40 overflow-y-auto border-t border-amber/30 bg-cream text-brown lg:hidden"
+          style={{
+            top: "calc(3.5rem + env(safe-area-inset-top))",
+            paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))",
+          }}
+        >
+          <nav className="page-pad flex min-h-full flex-col py-2">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="font-display border-b border-amber/20 py-4 text-sm tracking-[0.24em] uppercase"
+                className={cn(
+                  "font-display flex min-h-14 items-center border-b border-amber/20 text-sm tracking-[0.2em] uppercase",
+                  active === link.href ? "text-amber" : ""
+                )}
               >
                 {link.label}
               </a>
@@ -143,7 +154,7 @@ export function SiteHeader() {
             <a
               href="#register"
               onClick={() => setOpen(false)}
-              className="font-display mt-4 bg-amber py-4 text-center text-sm tracking-[0.24em] text-cream uppercase"
+              className="font-display mt-6 mb-4 flex min-h-14 items-center justify-center bg-amber text-sm tracking-[0.24em] text-cream uppercase"
             >
               Register
             </a>

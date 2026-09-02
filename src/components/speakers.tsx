@@ -19,25 +19,25 @@ export function Speakers() {
   }, [open]);
 
   return (
-    <section id="speakers" className="scroll-mt-20 bg-cream text-brown">
-      <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 sm:py-20 md:px-10 md:py-28">
-        <p className="font-display text-[11px] tracking-[0.42em] text-amber uppercase">
-          03 / People
+    <section id="speakers" className="scroll-mt-24 bg-cream text-brown">
+      <div className="page-pad py-14 sm:py-20 md:py-28">
+        <p className="font-display kicker text-[11px] text-amber uppercase">
+          08 / People
         </p>
-        <h2 className="font-display mt-4 max-w-xl text-[clamp(1.85rem,5vw,3.75rem)] font-semibold tracking-tight">
+        <h2 className="font-display mt-4 max-w-xl text-[clamp(1.7rem,7vw,3.75rem)] font-semibold tracking-tight">
           Speakers &amp; mentors
         </h2>
         <p className="mt-4 max-w-lg text-base text-brown-soft">
           Portraits replace these placeholders as confirmations land. Tap a card
           for the bio.
         </p>
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid min-w-0 gap-4 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
           {speakers.map((person) => (
             <button
               key={person.name}
               type="button"
               onClick={() => setOpenName(person.name)}
-              className="card-lift border border-line bg-cream p-6 text-left sm:p-8"
+              className="card-lift min-w-0 border border-line bg-cream p-5 text-left sm:p-8"
             >
               <div className="aspect-4/5 bg-cream-3" aria-hidden />
               <h3 className="font-display mt-5 text-xl font-semibold">
@@ -64,12 +64,13 @@ export function Speakers() {
           onClick={() => setOpenName(null)}
         >
           <div
-            className="w-full border border-line bg-cream p-6 sm:mx-auto sm:max-w-lg sm:p-8"
+            className="w-full border border-line bg-cream p-5 sm:mx-auto sm:max-w-lg sm:p-8"
+            style={{ paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="font-display text-[10px] tracking-[0.28em] text-amber uppercase">
+              <div className="min-w-0">
+                <p className="font-display text-[10px] tracking-[0.2em] text-amber uppercase sm:tracking-[0.28em]">
                   {open.role}
                 </p>
                 <h3 id="speaker-title" className="font-display mt-2 text-2xl font-semibold">
@@ -81,7 +82,7 @@ export function Speakers() {
                 type="button"
                 aria-label="Close"
                 onClick={() => setOpenName(null)}
-                className="p-2 text-brown-soft hover:text-brown"
+                className="flex size-11 shrink-0 items-center justify-center text-brown-soft hover:text-brown"
               >
                 <X className="size-5" />
               </button>

@@ -28,7 +28,7 @@ export function CopyValue({
       type="button"
       onClick={copy}
       title="Copy"
-      className={cn("text-amber hover:text-amber-bright", className)}
+      className={cn("break-all text-amber hover:text-amber-bright", className)}
     >
       {copied ? "Copied" : value}
     </button>

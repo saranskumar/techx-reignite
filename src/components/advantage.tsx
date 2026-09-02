@@ -2,17 +2,17 @@ import { advantages } from "@/lib/event";
 
 export function Advantage() {
   return (
-    <section id="advantage" className="scroll-mt-20 bg-cream text-brown">
-      <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 sm:py-20 md:px-10 md:py-28">
-        <p className="font-display text-[11px] tracking-[0.42em] text-amber uppercase">
+    <section id="advantage" className="scroll-mt-24 bg-cream text-brown">
+      <div className="page-pad py-14 sm:py-20 md:py-28">
+        <p className="font-display kicker text-[11px] text-amber uppercase">
           07 / Community
         </p>
-        <h2 className="font-display mt-4 max-w-xl text-[clamp(1.85rem,5vw,3.75rem)] font-semibold tracking-tight">
+        <h2 className="font-display mt-4 max-w-xl text-[clamp(1.7rem,7vw,3.75rem)] font-semibold tracking-tight">
           The TechX advantage
         </h2>
-        <ul className="mt-12 grid gap-px bg-amber/30 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 grid gap-px bg-amber/30 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
           {advantages.map((item) => (
-            <li key={item.index} className="bg-cream p-6 sm:p-8">
+            <li key={item.index} className="min-w-0 bg-cream p-5 sm:p-8">
               <p className="font-display text-[11px] tracking-[0.28em] text-amber">
                 {item.index}
               </p>

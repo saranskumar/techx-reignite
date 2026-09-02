@@ -10,29 +10,29 @@ function choosePass(id: string) {
 
 export function Tickets() {
   return (
-    <section id="tickets" className="scroll-mt-20 bg-cream-2 text-brown">
-      <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 sm:py-20 md:px-10 md:py-28">
-        <p className="font-display text-[11px] tracking-[0.42em] text-amber uppercase">
+    <section id="tickets" className="scroll-mt-24 bg-cream-2 text-brown">
+      <div className="page-pad py-14 sm:py-20 md:py-28">
+        <p className="font-display kicker text-[11px] text-amber uppercase">
           Delegate passes
         </p>
-        <h2 className="font-display mt-4 text-[clamp(1.85rem,5vw,3.75rem)] font-semibold tracking-tight">
+        <h2 className="font-display mt-4 text-[clamp(1.7rem,7vw,3.75rem)] font-semibold tracking-tight">
           Tickets
         </h2>
         <p className="mt-4 max-w-lg text-base leading-7 text-brown-mid">
           Registration is open. Select a pass to prefill the form, then pay via
-          UPI to <span className="text-amber">{event.upi}</span>.
+          UPI to <span className="break-all text-amber">{event.upi}</span>.
         </p>
-        <ul className="mt-12 grid gap-4 sm:grid-cols-3">
+        <ul className="mt-10 grid min-w-0 gap-4 sm:mt-12 md:grid-cols-3">
           {tickets.map((ticket) => (
-            <li key={ticket.id}>
+            <li key={ticket.id} className="min-w-0">
               <button
                 type="button"
                 onClick={() => choosePass(ticket.id)}
                 className={cn(
-                  "card-lift flex h-full w-full flex-col border border-line bg-cream p-6 text-left sm:p-8"
+                  "card-lift flex h-full min-h-36 w-full min-w-0 flex-col border border-line bg-cream p-5 text-left sm:p-8"
                 )}
               >
-                <p className="font-display text-[11px] tracking-[0.22em] text-brown-soft uppercase">
+                <p className="font-display text-[11px] tracking-[0.18em] text-brown-soft uppercase sm:tracking-[0.22em]">
                   {ticket.note}
                 </p>
                 <h3 className="font-display mt-3 text-xl font-semibold">

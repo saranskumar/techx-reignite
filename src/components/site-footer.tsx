@@ -4,18 +4,21 @@ import { event, partners } from "@/lib/event";
 export function SiteFooter() {
   return (
     <footer className="bg-cream text-brown">
-      <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 sm:py-20 md:px-10 md:py-24">
-        <p className="font-display text-[11px] tracking-[0.42em] text-amber uppercase">
+      <div
+        className="page-pad py-14 sm:py-20 md:py-24"
+        style={{ paddingBottom: "max(3.5rem, env(safe-area-inset-bottom))" }}
+      >
+        <p className="font-display kicker text-[11px] text-amber uppercase">
           In collaboration with
         </p>
-        <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        <ul className="mt-8 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
           {partners.map((partner) => (
-            <li key={partner.name}>
+            <li key={partner.name} className="min-w-0">
               <a
                 href={partner.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block border border-amber/25 px-3 py-4 text-center text-xs leading-5 hover:border-amber"
+                className="flex min-h-14 items-center justify-center border border-amber/25 px-3 py-4 text-center text-xs leading-5 break-words hover:border-amber"
               >
                 {partner.name}
               </a>
@@ -35,7 +38,7 @@ export function SiteFooter() {
             </p>
           </div>
           <div className="flex flex-col gap-3 text-sm md:col-span-3">
-            <a href={`mailto:${event.email}`} className="hover:text-amber">
+            <a href={`mailto:${event.email}`} className="break-all hover:text-amber">
               {event.email}
             </a>
             <span>

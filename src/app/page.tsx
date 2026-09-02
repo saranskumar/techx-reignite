@@ -13,7 +13,7 @@ import { Tracks } from "@/components/tracks";
 
 export default function Home() {
   return (
-    <main className="flex-1 overflow-x-hidden">
+    <main className="min-w-0 flex-1 overflow-x-clip">
       <Hero />
       <About />
       <Pillars />

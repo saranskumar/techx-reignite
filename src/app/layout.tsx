@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Cormorant_Garamond, Geist_Mono, Noto_Serif_JP, Syne } from "next/font/google";
 
 import { Grain } from "@/components/grain";
@@ -54,13 +54,20 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#fffcf1",
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${inter.variable} ${syne.variable} ${cormorant.variable} ${notoJp.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full overflow-x-hidden bg-cream text-brown">
+      <body className="min-h-full overflow-x-clip bg-cream text-brown">
         <a
           href="#about"
           className="font-display bg-amber text-cream sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[90] focus:px-4 focus:py-2 focus:text-[11px] focus:tracking-[0.2em] focus:uppercase"

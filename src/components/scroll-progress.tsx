@@ -19,6 +19,7 @@ export function ScrollProgress() {
   return (
     <div
       className="pointer-events-none fixed inset-x-0 top-0 z-[90] h-[3px] bg-line/40"
+      style={{ top: "env(safe-area-inset-top)" }}
       aria-hidden="true"
     >
       <div
