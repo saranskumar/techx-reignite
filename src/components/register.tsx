@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { CopyValue } from "@/components/copy-value";
 import { Label } from "@/components/ui/label";
 import { event, tickets, tracks } from "@/lib/event";
 
@@ -26,6 +27,18 @@ export function Register() {
   const price = useMemo(() => {
     return tickets.find((item) => item.id === membership)?.price ?? null;
   }, [membership]);
+
+  useEffect(() => {
+    const onPass = (event: Event) => {
+      const id = (event as CustomEvent<string>).detail;
+      if (id === "cs" || id === "ieee" || id === "open") {
+        setMembership(id);
+        setStatus("idle");
+      }
+    };
+    window.addEventListener("techx-pass", onPass);
+    return () => window.removeEventListener("techx-pass", onPass);
+  }, []);
 
   async function onSubmit(eventForm: React.FormEvent<HTMLFormElement>) {
     eventForm.preventDefault();
@@ -98,7 +111,7 @@ export function Register() {
           </h2>
           <p className="mt-6 max-w-md text-base leading-8 text-cream/75">
             After you submit, pay the matching fee to{" "}
-            <span className="text-amber">{event.upi}</span> and write to{" "}
+            <CopyValue value={event.upi} /> and write to{" "}
             <a
               href={`mailto:${event.email}`}
               className="text-amber underline-offset-4 hover:underline"
@@ -264,7 +277,7 @@ export function Register() {
                 nativeButton
                 type="submit"
                 disabled={status === "submitting"}
-                className="font-display h-12 rounded-none bg-amber px-6 text-[11px] tracking-[0.28em] text-cream uppercase hover:bg-amber/90 sm:h-14"
+            className="btn-amber font-display h-12 rounded-none px-6 text-[11px] tracking-[0.28em] uppercase sm:h-14"
               >
                 {status === "submitting" ? "Holding…" : "Submit registration"}
               </Button>

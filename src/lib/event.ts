@@ -90,6 +90,41 @@ export const tracks = [
   },
 ] as const;
 
+export const pillars = {
+  TECH: [
+    {
+      tag: "Pillar 01 // Lab sprints",
+      badge: "Offline workshops",
+      title: "Hands-on Workshops",
+      body: "Intensive technical sprints organized across two offline tracks. Participants build end-to-end architectures, test microservices, and deploy production-ready systems under mentorship.",
+      chips: ["System building", "Code spark"],
+    },
+    {
+      tag: "Pillar 02 // Keynotes",
+      badge: "Interdisciplinary",
+      title: "Talk Sessions",
+      body: "Forward-looking keynotes and discussions exploring interdisciplinary technological convergence, including Advanced Driver Assistance Systems (ADAS) and AI breakthroughs in Healthcare.",
+      chips: ["Emerging tech", "Industry trends"],
+    },
+  ],
+  TRAIN: [
+    {
+      tag: "Pillar 03 // Career readiness",
+      badge: "Placement skills",
+      title: "Soft Skills & Communication",
+      body: "Actionable sessions on campus-to-corporate transitions, resume curation, mock interview etiquette, and strategic tech communication for technical hiring rounds.",
+      chips: ["Interview drills", "Resume curation"],
+    },
+    {
+      tag: "Pillar 04 // Direct guidance",
+      badge: "1-on-1 sessions",
+      title: "Nano-Mentoring",
+      body: "Curated 1-on-1 mentorship pods matching delegates with distinguished young professionals from top technology firms for portfolio roadmapping and personalized career counsel.",
+      chips: ["Portfolio review", "Career counsel"],
+    },
+  ],
+} as const;
+
 export const preEvents = [
   {
     date: "13th September",

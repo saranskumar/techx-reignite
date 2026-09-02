@@ -18,6 +18,7 @@ const links = [
 export function SiteHeader() {
   const [overHero, setOverHero] = useState(true);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("#about");
 
   useEffect(() => {
     const hero = document.getElementById("top");
@@ -31,6 +32,26 @@ export function SiteHeader() {
     );
 
     observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const ids = links.map((link) => link.href.slice(1));
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActive(`#${visible.target.id}`);
+      },
+      { rootMargin: "-35% 0px -50% 0px", threshold: [0.1, 0.3, 0.6] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
 
@@ -66,7 +87,12 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
-              className="font-display text-[10px] font-medium tracking-[0.2em] uppercase opacity-80 transition-opacity hover:opacity-100 xl:text-[11px]"
+              className={cn(
+                "font-display text-[10px] font-medium tracking-[0.2em] uppercase transition-colors xl:text-[11px]",
+                active === link.href
+                  ? "text-amber opacity-100"
+                  : "opacity-70 hover:opacity-100"
+              )}
             >
               {link.label}
             </a>
@@ -79,8 +105,8 @@ export function SiteHeader() {
             className={cn(
               "font-display hidden h-9 items-center px-4 text-[10px] tracking-[0.22em] uppercase sm:inline-flex",
               inverted
-                ? "bg-amber text-cream"
-                : "bg-brown text-cream hover:bg-brown-mid"
+                ? "btn-amber"
+                : "bg-brown text-cream hover:bg-amber-hover"
             )}
           >
             Register

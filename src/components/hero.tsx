@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { Countdown } from "@/components/countdown";
 import { event } from "@/lib/event";
 
 export function Hero() {
@@ -47,10 +48,11 @@ export function Hero() {
             </span>
           </p>
         </div>
+        <Countdown />
         <div className="mt-10 flex flex-col gap-3 sm:mt-12 sm:flex-row sm:items-center">
           <a
             href="#register"
-            className="font-display inline-flex h-12 items-center justify-center bg-amber px-6 text-[11px] tracking-[0.28em] text-cream uppercase"
+            className="btn-amber font-display inline-flex h-12 items-center justify-center px-6 text-[11px] tracking-[0.28em] uppercase"
           >
             Register now
           </a>

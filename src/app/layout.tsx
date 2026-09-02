@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Geist_Mono, Noto_Serif_JP, Syne } from "next/font/google";
+import { Inter, Cormorant_Garamond, Geist_Mono, Noto_Serif_JP, Syne } from "next/font/google";
 
 import { Grain } from "@/components/grain";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { SiteHeader } from "@/components/site-header";
 
 import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
 
 const syne = Syne({
   variable: "--font-syne",
@@ -52,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${cormorant.variable} ${notoJp.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${syne.variable} ${cormorant.variable} ${notoJp.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full overflow-x-hidden bg-cream text-brown">
         <a
@@ -61,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to about
         </a>
+        <ScrollProgress />
         <Grain />
         <SiteHeader />
         {children}

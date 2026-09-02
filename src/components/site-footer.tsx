@@ -1,3 +1,4 @@
+import { CopyValue } from "@/components/copy-value";
 import { event, partners } from "@/lib/event";
 
 export function SiteFooter() {
@@ -37,7 +38,12 @@ export function SiteFooter() {
             <a href={`mailto:${event.email}`} className="hover:text-amber">
               {event.email}
             </a>
-            <p>UPI {event.upi}</p>
+            <span>
+              UPI <CopyValue value={event.upi} />
+            </span>
+            <a href="#top" className="hover:text-amber">
+              Back to top
+            </a>
           </div>
           <div className="flex flex-col gap-3 text-sm md:col-span-4 md:items-end">
             <a

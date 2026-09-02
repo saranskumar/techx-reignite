@@ -25,8 +25,10 @@ export function PreEvents() {
         <div
           role="tablist"
           aria-label="Pre-event dates"
-          className="-mx-4 mt-10 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0"
+          className="relative mt-10"
         >
+          <div className="pointer-events-none absolute top-6 right-4 left-4 hidden h-px bg-line sm:block" />
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0">
           {preEvents.map((item) => {
             const selected = item.date === active;
             return (
@@ -37,19 +39,20 @@ export function PreEvents() {
                 aria-selected={selected}
                 onClick={() => setActive(item.date)}
                 className={cn(
-                  "font-display shrink-0 border px-4 py-3 text-[11px] tracking-[0.18em] uppercase transition-colors",
+                  "font-display relative z-[1] shrink-0 border px-4 py-3 text-[11px] tracking-[0.18em] uppercase transition-colors",
                   selected
                     ? "border-amber bg-amber text-cream"
-                    : "border-amber/30 bg-transparent text-brown hover:border-amber"
+                    : "border-line bg-cream text-brown hover:border-amber"
                 )}
               >
                 {item.short}
               </button>
             );
           })}
+          </div>
         </div>
 
-        <article className="mt-8 border border-amber/30 p-5 sm:p-8 md:p-10">
+        <article className="mt-8 border border-line bg-cream p-5 transition-all sm:p-8 md:p-10">
           <p className="font-display text-[11px] tracking-[0.28em] text-amber uppercase">
             {current.date} · {current.organizer}
           </p>
